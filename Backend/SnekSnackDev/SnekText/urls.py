@@ -10,4 +10,5 @@ urlpatterns = [
     path("chat/<int:ChatRoomId>", chatlist, name="textList"),
     path("login", chatlist, name="textList"),
     path("logout", chatlist, name="textList"),
+    path('hello/', views.hello_world, name='hello_world'),
 ]
