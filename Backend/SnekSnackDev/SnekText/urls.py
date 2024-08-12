@@ -3,11 +3,11 @@ from .views import *
  
  
 urlpatterns = [
-    path("persona/list", chatlist, name="textList"),
-    path("persona/create", chatlist, name="textList"),
-    path("persona/view/<int:id>", chatlist, name="textList"),
+    path("persona/list", persona_list_view, name="persona_list"),
+    path("persona/create", persona_create_view, name="persona_create"),
+    path("persona/details/<int:id>", persona_details_view, name="persona_details"),
     # chat can be created when viewing the persona 
-    path("chat/<int:ChatRoomId>", chatlist, name="textList"),
-    path("login", chatlist, name="textList"),
-    path("logout", chatlist, name="textList"),
+    # path("chat/<int:ChatRoomId>", chatroom_view, name="textList"),
+    path("login", login_view, name="login"),
+    path("logout", logout_view, name="logout"),
 ]

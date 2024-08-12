@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persona list</title>
+</head>
+<body>
+    {% for persona in personas%}
+    <div>
+        <a href="{% url 'persona_details' persona.id %}">
+            {{persona.name}}
+        </a>
+    </div>
+    {% endfor %}
+</body>
+</html>
