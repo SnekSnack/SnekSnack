@@ -2,6 +2,10 @@ from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import *
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
+from .forms import *
 
 # logins
 def login_view(request):
@@ -26,14 +30,19 @@ def logout_view(request):
 def persona_list_view(request):
     personas = Persona.objects.all()
     context = {"personas": personas}
-    return render(request, "template/persona_list.html", context)
+    return render(request, "persona_list.html", context)
 
-def persona_create_view(request):
-    
-    context = {}
-    return render(request, "template/persona_create", context)
+class persona_create_view(LoginRequiredMixin, CreateView):
+    model = Persona
+    form_class = PersonaForm
+    template_name = 'persona_create.html'
+    success_url = reverse_lazy('persona_list')  # Redirect to a list view or another appropriate page after creation
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # Assign the current user to the profile
+        return super().form_valid(form)
 
 def persona_details_view(request, id):
     detail = get_object_or_404(Persona, pk=id)
     context = {"detail": detail}
-    return render(request, "template/persona_details", context)
+    return render(request, "persona_detail.html", context)
