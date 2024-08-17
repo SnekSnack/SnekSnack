@@ -32,7 +32,7 @@ export default function RootLayout({
       <ThemeProvider theme={theme}>
         <CssBaseline />  
         <body className={inter.className}>
-          <div className="column">
+          <div>
             {children}
           </div>
         </body>

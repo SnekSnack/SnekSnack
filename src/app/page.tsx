@@ -1,9 +1,10 @@
+"use client"
 
-import Link from "next/link";
 import { Box } from "@mui/material";
 import Header from "@/components/Header";
 
 import '@/app/globals.css'
+import AssignmentBar from "@/components/AssignmentBar/AssignmentBar";
 
 export default function Home() {
 
@@ -30,12 +31,13 @@ export default function Home() {
   return (
     <>
       <Header/>
-      <Box className="column">
-      {chats.map((chat) => (
-        <Link href={`/${chat.id}`}>
-          {chat.assignmentId}
-        </Link>
-      ))}
+
+      <Box className="content-wrapper">
+        <Box className="column gap-4">
+        {chats.map((chat) => (
+          <AssignmentBar assignment={chat}/>
+        ))}
+        </Box>
       </Box>
     </>
   );
