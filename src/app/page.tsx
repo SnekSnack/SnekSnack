@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Header from "@/components/Header";
 
 import '@/app/globals.css'
-import AssignmentBar from "@/components/AssignmentBar";
+import AssignmentBar from "@/components/AssignmentBar/AssignmentBar";
 
 export default function Home() {
 
@@ -33,7 +33,7 @@ export default function Home() {
       <Header/>
 
       <Box className="content-wrapper">
-        <Box className="column">
+        <Box className="column gap-4">
         {chats.map((chat) => (
           <AssignmentBar assignment={chat}/>
         ))}
