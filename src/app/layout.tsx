@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme'; 
 import "./globals.css";
 
+import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 const title = "IT PROJECT"
