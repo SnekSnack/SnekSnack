@@ -14,12 +14,12 @@ const theme = createTheme({
 			styleOverrides: {
 				root: {
 					margin: 0,
-					color: 'white',  // Sets the button text color to black
+					color: 'white',  
 					backgroundColor: '#3c70ba',
 					fontFamily: inter.style.fontFamily,
 					'&:hover': {
-						color: 'black',  // Change the text color on hover (example: red)
-						backgroundColor: '#95b2db',
+						color: 'white',  
+						backgroundColor: '#414141',
 					},
 				},
 			},

@@ -1,8 +1,15 @@
 @import url('@/app/globals.css');
 
 .bar {
+	color: #fff;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	background-color: #7d7d7d;
+}
+
+.bar:hover {
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	background-color: #414141;
 }
 
 .dropdown {
