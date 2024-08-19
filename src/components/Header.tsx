@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 import { Box } from '@mui/material'
 import "@/app/globals.css"
 
@@ -17,7 +17,9 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
       <button className="header-button">HOME</button>
       <div className="header-right">
         <span className="header-message">Hi, NAME {userName}</span>
-        <button className="header-button">LOGOUT</button>
+        <Link href="/Login" passHref>
+          <button className="header-button">LOGOUT</button>
+        </Link> 
       </div>
     </header>
   );
