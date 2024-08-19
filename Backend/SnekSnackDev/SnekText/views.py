@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import *
+from .models import Message
 
 # logins
 def login_view(request):
@@ -46,3 +47,20 @@ def persona_details_view(request, id):
     detail = get_object_or_404(Persona, pk=id)
     context = {"detail": detail}
     return render(request, "persona_detail.html", context)
+
+
+# View for chatting
+def chat_view(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save()
+            response_message = f'Received message: {message.content[:10]}'
+            return redirect('chat')
+    else:
+        # For inputing data
+        form = MessageForm()
+
+    chat_log = Message.objects.all()
+
+    return render(request, 'chat.html', {'form': form, 'chat_log': chat_log})

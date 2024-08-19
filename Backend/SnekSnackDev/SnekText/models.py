@@ -14,3 +14,12 @@ class ChatRoom(models.Model):
 class Text(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField()
+
+# Messaging features for user AI communication
+class Message(models.Model):
+    sender = models.CharField(max_length=100)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)  # When the message was sent
+
+    def __str__(self):
+        return f'{self.sender}: {self.content[:50]}'

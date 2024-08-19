@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Chat Log</h1>
+    <div id="chat-log">
+        {% for message in chat_log %}
+            <p><strong>{{ message.sender }}:</strong> {{ message.content }}</p>
+            <p><strong>Server Return from:</strong> UPDATE RESPONSE</p>
+        {% endfor %}
+    </div>
+
+    <h2>Send a Message</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
