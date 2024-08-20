@@ -15,8 +15,8 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
   return (
     <header className="header">
       <button className="header-button">HOME</button>
+      <span className="header-message">Hi, NAME {userName}</span>
       <div className="header-right">
-        <span className="header-message">Hi, NAME {userName}</span>
         <Link href="/Login" passHref>
           <button className="header-button">LOGOUT</button>
         </Link> 
