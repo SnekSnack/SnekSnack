@@ -14,7 +14,7 @@ export const MuiButton = () => {
 export default function Admin() {
     return(
         <>
-            <Header/>
+            <Header userName="username"/>
             <Box className="content-wrapper" sx={{ paddingTop: '80px' }}>
                 <MuiButton></MuiButton>
             </Box>
