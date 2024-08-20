@@ -12,6 +12,6 @@ urlpatterns = [
     path("persona/details/<int:id>", views.persona_details_view, name="persona_details"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
-    path('chat/', views.chat_view, name='chat')
+    path('chat/', views.chat_view, name='chat'),
 ]
 

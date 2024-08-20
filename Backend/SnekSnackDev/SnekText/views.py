@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import *
 from .models import Message
+from rest_framework import viewsets
+from .serializers import *
 
 # ====================== Prototype (Subject to change) ===============================
 #* Up for change depending on how front end handles it
@@ -39,6 +41,11 @@ class persona_create_view(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user  # Assign the current user to the profile
         return super().form_valid(form)
     
+
+class UserTestView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
 # ================= End of prototype ========================
 
 
