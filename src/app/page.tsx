@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <>
-      <Header/>
+      <Header userName="username"/>
 
       <Box className="content-wrapper">
         <Box className="column gap-4">
