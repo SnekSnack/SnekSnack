@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, Modal, Typography } from '@mui/material'
+import Link from 'next/link';
 
 import "@/app/globals.css";
 
@@ -37,36 +38,11 @@ export default function AssignmentBar({ assignment }: any) {
 				}}
 			>
 				This is the dropdown content.
-				<Button onClick={toggleChat}>Chat Now</Button>
+				<Link href="/Chat" passHref>
+					<Button>Chat Now</Button>
+				</Link>
 			</Box>
 		)}
-		<Modal
-        open={isChatOpen}
-        onClose={toggleChat}
-        aria-labelledby="chat-title"
-        aria-describedby="chat-description"
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-		  height: 700,
-          width: 1000,
-          bgcolor: 'background.paper',
-          borderRadius: 2,
-          boxShadow: 24,
-          p: 4,
-        }}>
-          <Typography id="chat-title" variant="h6" component="h2">
-            Chat Window
-          </Typography>
-          <Typography id="chat-description" sx={{ mt: 2 }}>
-            This is where the chat messages will go.
-          </Typography>
-          <Button onClick={toggleChat} sx={{ mt: 2 }}>Close Chat</Button>
-        </Box>
-      </Modal>
 		</Box>
   )
 
