@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Modal, Typography } from '@mui/material'
+import Link from 'next/link';
 
 import "@/app/globals.css";
 
 export default function AssignmentBar({ assignment }: any) {
 	const [isOpen, setIsOpen] = useState(false);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  	const [isChatOpen, setIsChatOpen] = useState(false);
+	
+	const toggleDropdown = () => {
+    	setIsOpen(!isOpen);
+ 	};
+
+	const toggleChat = () => {
+		setIsChatOpen(!isChatOpen);
+	};
 
   return (
 		<Box className="w-full md:max-w-2xl">
@@ -31,9 +38,13 @@ export default function AssignmentBar({ assignment }: any) {
 				}}
 			>
 				This is the dropdown content.
-				<Button href={`/${assignment.id}`}>Chat Now</Button>
+				<Link href="/Chat" passHref>
+					<Button>Chat Now</Button>
+				</Link>
 			</Box>
 		)}
 		</Box>
   )
+
+  
 }

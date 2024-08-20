@@ -35,12 +35,12 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #f8f9fa;
+    background-color: #cccccc;
     border-bottom: 1px solid #ddd;
   }
   
   .header-button {
-    background-color: #bb7bd4bf;
+    background-color: #0056b3;
     color: white;
     border: none;
     padding: 10px 15px;
