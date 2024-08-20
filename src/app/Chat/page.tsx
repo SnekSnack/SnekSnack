@@ -65,6 +65,7 @@ export default function ChatPage() {
 
 
         {/* TEXTBOX */}
+        {remainingQuestions > 0 ? (
         <Box sx={{ display: "flex",alignSelf: "center", justifyContent: "center", gap: 2 }}>
           <TextField
             value={inputValue}
@@ -72,6 +73,11 @@ export default function ChatPage() {
             placeholder="Type your message..."
             variant="outlined"
             sx={{ flexGrow: 1, maxWidth: 600 }}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSendMessage(); // Call the send message function when Enter is pressed
+                }
+            }}
           />
           <Button
             variant="contained"
@@ -82,6 +88,7 @@ export default function ChatPage() {
             Send
           </Button>
         </Box>
+        ): null }
 
 
         {/* Question Counter */}
@@ -95,7 +102,9 @@ export default function ChatPage() {
             transform: "translateX(-50%)",
           }}
         >
-          Number of questions remaining: {remainingQuestions}
+            {remainingQuestions === 0
+          ? "You have reached the limit of your questions"
+          : `Number of questions remaining: ${remainingQuestions}`}
         </Typography>
         </Box>
       </>
