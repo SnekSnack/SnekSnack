@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Button, Modal,TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton,TextField, Typography } from "@mui/material";
+import MicIcon from '@mui/icons-material/Mic';
 import Header from "@/components/Header";
 import "@/app/globals.css"
 
@@ -46,6 +47,8 @@ export default function ChatPage() {
           }}
         >
 
+            
+
         {/* Chat Bubbles */}
           {messages.map((message, index) => (
             <Box
@@ -65,8 +68,18 @@ export default function ChatPage() {
 
 
         {/* TEXTBOX */}
+        
         {remainingQuestions > 0 ? (
         <Box sx={{ display: "flex",alignSelf: "center", justifyContent: "center", gap: 2 }}>
+          
+          {/* Microphone Button */}
+          <IconButton 
+            sx={{ bgcolor: "#e0e0e0" }} 
+            aria-label="microphone"
+          >
+            <MicIcon />
+          </IconButton>
+          
           <TextField
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -90,7 +103,6 @@ export default function ChatPage() {
         </Box>
         ): null }
 
-
         {/* Question Counter */}
         <Typography
           id="number-of-questions"
@@ -105,7 +117,8 @@ export default function ChatPage() {
             {remainingQuestions === 0
           ? "You have reached the limit of your questions"
           : `Number of questions remaining: ${remainingQuestions}`}
-        </Typography>
+        </Typography> 
+
         </Box>
       </>
     );
