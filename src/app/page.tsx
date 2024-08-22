@@ -1,10 +1,9 @@
 "use client"
 
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Header from "@/components/Header";
 
 import '@/app/globals.css'
-import AssignmentBar from "@/components/AssignmentBar";
 
 export default function Home() {
 
@@ -33,11 +32,7 @@ export default function Home() {
       <Header userName="username"/>
 
       <Box className="content-wrapper">
-        <Box className="column gap-4">
-        {chats.map((chat) => (
-          <AssignmentBar assignment={chat}/>
-        ))}
-        </Box>
+        <Button className="button" href="/Chat">Start chat</Button>
       </Box>
     </>
   );

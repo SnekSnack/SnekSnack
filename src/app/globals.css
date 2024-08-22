@@ -30,38 +30,16 @@ body {
   }
 }
 
+
+
 .header {
   display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #cccccc;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .header-button {
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .header-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .header-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header-message {
-    margin-right: 15px;
-  /*background-color: bisque;
-  width: 100vw*/
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: #cccccc;
+  border-bottom: 1px solid #ddd;
+  font-size: medium;
 }
 
 .row {
