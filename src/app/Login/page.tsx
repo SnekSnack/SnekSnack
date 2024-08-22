@@ -56,11 +56,12 @@ export default function Login() {
 							autoComplete="current-password"
 						/>
 						<Button
-							className="mt-4"
+							className="button mt-4"
 							type="submit"
 							fullWidth
 							variant="contained"
 							color="primary"
+							href="/" //temporary href
 						>
 							Login
 						</Button>
