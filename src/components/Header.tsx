@@ -8,6 +8,8 @@ interface HeaderProps {
 }
 
 
+// need to add a handle onclick to actually log them out
+
 const Header: React.FC<HeaderProps> = ({ userName }) => {
 
   return (
