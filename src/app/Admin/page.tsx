@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Button } from "@mui/material";
 import Header from "@/components/Header";
 import "@/app/globals.css";
