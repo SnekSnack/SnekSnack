@@ -6,7 +6,7 @@ import "@/app/globals.css"
 export const MuiButton = () => {
     return (
         <div>
-            <Button variant='contained'>+ Create Assignment</Button>
+            <Button variant="contained" sx={{ width: '1000px' , height: '50px'}}>+ Create Assignment</Button>
         </div>
     )
 }
