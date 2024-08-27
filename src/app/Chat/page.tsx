@@ -96,7 +96,14 @@ export default function ChatPage() {
                   md: '700px',
                 }
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter'){
+                  handleSendMessage();
+                }
+              }}
             />
+
+
             <Button
               variant="contained"
               onClick={handleSendMessage}
