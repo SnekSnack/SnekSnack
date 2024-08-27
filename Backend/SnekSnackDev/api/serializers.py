@@ -16,9 +16,14 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
     
-class NoteSerializer(serializers.ModelSerializer):
+class BotSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatBot
         fields = "__all__"
         # so only backend can change
-        # extra_kwargs = {"author": {"read_only":True}}
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Assignment
+        fields = "__all__"
+

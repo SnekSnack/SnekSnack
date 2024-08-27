@@ -10,10 +10,10 @@ class ChatBot(models.Model):
     def __str__(self):
         return self.name
 
-class Assingment(models.Model):
+class Assignment(models.Model):
     title = models.CharField(max_length=200)
     due_date = models.DateField()
-    authors = models.ManyToManyField(ChatBot, related_name='books')
+    bots = models.ManyToManyField(ChatBot, related_name='bots')
 
     def __str__(self):
         return self.title
