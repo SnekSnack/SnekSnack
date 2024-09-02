@@ -13,7 +13,7 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
     # temporary to let anyone use this view
-    permission_classes = [AllowAny]
+    
 
 class BotCreate(generics.ListCreateAPIView):
     serializer_class = UserSerializer
@@ -66,3 +66,23 @@ class AssignmentDelete(generics.DestroyAPIView):
     serializer_class = AssignmentSerializer
     permission_classes = [IsAuthenticated]
 
+
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, format=None):
+        data = self.request.data
+
+        username = data['username']
+        password = data['password']
+
+        try:
+            user = auth.authenticate(username=username, password=password)
+
+            if user is not None:
+                auth.login(request, user)
+                return Response({ 'success': 'User authenticated' })
+            else:
+                return Response({ 'error': 'Error Authenticating' })
+        except:
+            return Response({ 'error': 'Something went wrong when logging in' })
