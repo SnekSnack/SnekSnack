@@ -8,8 +8,7 @@ export default function Admin() {
         <>
             <Header userName="username"/>
             <Box className="content-wrapper" sx={{ paddingTop: '80px' }}>
-                <Button variant="contained" href="/Admin/Create" sx={{ width: '1000px' , height: '50px'}}>+ Create Assignment</Button>
-                <Button variant="contained" href="/Admin/Manage" sx={{ width: '1000px' , height: '50px'}}>Manage Users</Button>
+                manage users
             </Box>
         </>
         
