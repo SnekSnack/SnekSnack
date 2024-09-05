@@ -1,14 +1,28 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Link } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Link, Modal } from '@mui/material';
 import "@/app/globals.css"
 
 export default function Login() {
 	const [isStaff, setIsStaff] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [openConsentModal, setOpenConsentModal] = useState(false);
+	
 	const handleToggle = () => {
 		setIsStaff((prev) => !prev);
 	};
+
+	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setIsLoggedIn(true);
+		setOpenConsentModal(true);
+	}
+
+	const handleAgree = () => {
+		setOpenConsentModal(false);
+		window.location.href = '/';
+	}
 
 	return (
 		<Box className="content-wrapper justify-center">
@@ -32,6 +46,7 @@ export default function Login() {
 						sx={{ mt: 1 }}
 						action={isStaff ? '/staff-login' : '/user-login'} // endpoints?
 						method="POST"
+						onSubmit={handleLogin}
 					>
 						<TextField
 							sx={{ backgroundColor: 'white'}}
@@ -61,7 +76,6 @@ export default function Login() {
 							fullWidth
 							variant="contained"
 							color="primary"
-							href="/" //temporary href
 						>
 							Login
 						</Button>
@@ -73,6 +87,42 @@ export default function Login() {
 					{isStaff ? 'Switch to User Login' : 'Switch to Staff Login'}
 				</Link>
 			</Box>
+
+			{/* Consent Popup Modal */}
+			<Modal
+				open={openConsentModal}
+				onClose={() => setOpenConsentModal(false)}
+			>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						width: 400,
+						bgcolor: 'background.paper',
+						boxShadow: 24,
+						p: 4,
+						borderRadius: 2,
+					}}
+				>
+					<Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+						AI Consent
+					</Typography>
+					<Typography sx={{ mb: 3 }}>
+						You consent to the use of Artificial Intelligence in this assignment. Please click "Agree" to proceed.
+					</Typography>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={handleAgree}
+						fullWidth
+					>
+						Agree
+					</Button>
+				</Box>
+			</Modal>
+
 		</Box>
   )
 }

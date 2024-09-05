@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Button, Modal,TextField, Typography } from "@mui/material";
+import { Box, Button, Modal, TextField, Typography, IconButton } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import MicIcon from '@mui/icons-material/Mic';
 //import Header from "@/components/Header";
 import "@/app/globals.css"
 
@@ -80,10 +81,15 @@ export default function ChatPage() {
               </Box>
             ))}
           </Box>
-
+          
 
           {/* TEXTBOX */}
           <Box sx={{ display: "flex", alignSelf: "center", justifyContent: "center", gap: 2 }}>
+            
+            <IconButton color="primary">
+              <MicIcon />
+            </IconButton>
+            
             <TextField
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -102,6 +108,7 @@ export default function ChatPage() {
                 }
               }}
             />
+
 
 
             <Button
