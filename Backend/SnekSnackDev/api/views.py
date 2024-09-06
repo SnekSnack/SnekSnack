@@ -5,6 +5,7 @@ from .serializers import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import *
 from rest_framework.response import Response
+from .perms import *
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -36,7 +37,7 @@ class BotCreate(generics.ListCreateAPIView):
     
 class BotDelete(generics.DestroyAPIView):
     serializer_class = ChatBot
-    permission_classes = [IsAuthenticated]
+    permission_classes = [StaffOnly]
 
     def get_queryset(self):
         user = self.request.user
@@ -64,7 +65,7 @@ class AssignmentCreate(generics.ListCreateAPIView):
     
 class AssignmentDelete(generics.DestroyAPIView):
     serializer_class = AssignmentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [StaffOnly]
 
 
 # class LoginView(APIView):
