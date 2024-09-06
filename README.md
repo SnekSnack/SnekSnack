@@ -34,3 +34,36 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+## Quick guide to fetching data;
+
+Make sure to use 
+```import api from "../api";```
+
+<!-- Keeps tracks of data -->
+const [notes, setNotes] = useState([]);
+
+### Load data on page load
+useEffect(() => {
+    getBots();
+}, []);
+
+### Fetching the data
+const getBots = () => {
+    <!-- use the api -->
+        api
+        <!-- check Backend/SnekSnackDev/api/urls to see what is available -->
+        <!-- create also returns fetches -->
+            .get("/api/bots/")
+            <!-- get the response data -->
+            .then((res) => res.data)
+            <!-- update our contstants with new data -->
+            .then((data) => {
+                setNotes(data);
+                console.log(data);
+            })
+            <!-- returns an alert if there is an error -->
+            .catch((err) => alert(err));
+    };

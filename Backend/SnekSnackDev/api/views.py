@@ -67,22 +67,22 @@ class AssignmentDelete(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class LoginView(APIView):
-    permission_classes = [AllowAny]
+# class LoginView(APIView):
+#     permission_classes = [AllowAny]
 
-    def post(self, request, format=None):
-        data = self.request.data
+#     def post(self, request, format=None):
+#         data = self.request.data
 
-        username = data['username']
-        password = data['password']
+#         username = data['username']
+#         password = data['password']
 
-        try:
-            user = auth.authenticate(username=username, password=password)
+#         try:
+#             user = auth.authenticate(username=username, password=password)
 
-            if user is not None:
-                auth.login(request, user)
-                return Response({ 'success': 'User authenticated' })
-            else:
-                return Response({ 'error': 'Error Authenticating' })
-        except:
-            return Response({ 'error': 'Something went wrong when logging in' })
+#             if user is not None:
+#                 auth.login(request, user)
+#                 return Response({ 'success': 'User authenticated' })
+#             else:
+#                 return Response({ 'error': 'Error Authenticating' })
+#         except:
+#             return Response({ 'error': 'Something went wrong when logging in' })
