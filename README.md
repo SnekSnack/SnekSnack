@@ -42,14 +42,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 Make sure to use 
 ```import api from "../api";```
 
-<!-- Keeps tracks of data -->
-const [bots, setBots] = useState([]);
+
+
 
 ### Load data on page load
+```
+<!-- saves the data-->
+const [bots, setBots] = useState([]);
+
 useEffect(() => {
     getBots();
 }, []);
-
+```
 ### Fetching the data
 ```
 const getBots = () => {
