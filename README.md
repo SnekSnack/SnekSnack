@@ -43,7 +43,7 @@ Make sure to use
 ```import api from "../api";```
 
 <!-- Keeps tracks of data -->
-const [notes, setNotes] = useState([]);
+const [bots, setBots] = useState([]);
 
 ### Load data on page load
 useEffect(() => {
@@ -61,7 +61,7 @@ const getBots = () => {
             .then((res) => res.data)
             <!-- update our contstants with new data -->
             .then((data) => {
-                setNotes(data);
+                setBots(data);
                 console.log(data);
             })
             <!-- returns an alert if there is an error -->
