@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Box, Button, TextField, Typography, IconButton } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
@@ -20,6 +20,8 @@ export default function ChatPage() {
     const [inputValue, setInputValue] = useState<string>("");
     const [disableSend, setDisableSend] = useState(false);
 
+    const chatEndRef = useRef<null | HTMLDivElement>(null);
+
     const handleSendMessage = () => {
         if (inputValue.trim() !== "" && remainingQuestions > 0) {
           setDisableSend(true); // stop user from sending anything
@@ -32,6 +34,9 @@ export default function ChatPage() {
           setRemainingQuestions(remainingQuestions - 1); 
           setDisableSend(false); // allow user to send again
         }
+
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
       };
 
     return (
@@ -92,6 +97,7 @@ export default function ChatPage() {
                 </Box>
               </Box>
             ))}
+            <div ref={chatEndRef} />
           </Box>
           
 

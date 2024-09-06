@@ -6,7 +6,7 @@ import "@/app/globals.css"
 
 export default function Login() {
 	const [isStaff, setIsStaff] = useState(false);
-	const [loginFailed, setLoginFailed] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
 	
 	const handleToggle = () => {
@@ -15,15 +15,8 @@ export default function Login() {
 
 	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
-		/** authenticate */
-		// setLoginFailed(true); // if failed, set true to show error message
-
-		if (isStaff) {
-			window.location.href = '/Admin';
-		} else {
-			setOpenConsentModal(true);
-		}
+		setIsLoggedIn(true);
+		setOpenConsentModal(true);
 	}
 
 	const handleAgree = () => {
@@ -77,9 +70,6 @@ export default function Login() {
 							id="password"
 							autoComplete="current-password"
 						/>
-						<Typography hidden={!loginFailed} className="text-red-800" variant="body2">
-							Incorrect email and/or password.
-						</Typography>
 						<Button
 							className="button mt-4"
 							type="submit"
@@ -120,7 +110,7 @@ export default function Login() {
 						AI Consent
 					</Typography>
 					<Typography sx={{ mb: 3 }}>
-						By continuing, you consent to the use of Artificial Intelligence in this assignment. Please click "Agree" to proceed.
+						You consent to the use of Artificial Intelligence in this assignment. Please click "Agree" to proceed.
 					</Typography>
 					<Button
 						variant="contained"
