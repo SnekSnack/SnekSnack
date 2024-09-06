@@ -51,6 +51,7 @@ useEffect(() => {
 }, []);
 
 ### Fetching the data
+```
 const getBots = () => {
     <!-- use the api -->
         api
@@ -67,3 +68,4 @@ const getBots = () => {
             <!-- returns an alert if there is an error -->
             .catch((err) => alert(err));
     };
+    ```
