@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { Box, Button, TextField, Typography, IconButton } from "@mui/material";
+import { Box, Button, TextField, Typography, IconButton, Modal } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 //import Header from "@/components/Header";
 import "@/app/globals.css"
+import jsPDF from "jspdf";
 
 function getMessageResponse(message:String) {
   const reversedMessage = message.split("").reverse().join("");
@@ -19,7 +20,7 @@ export default function ChatPage() {
     const [remainingQuestions, setRemainingQuestions] = useState(10);
     const [inputValue, setInputValue] = useState<string>("");
     const [disableSend, setDisableSend] = useState(false);
-
+    const [openDownloadTranscript, setOpenDownloadTranscript] = useState(false);
     const chatEndRef = useRef<null | HTMLDivElement>(null);
 
     const handleSendMessage = () => {
@@ -35,9 +36,25 @@ export default function ChatPage() {
           setDisableSend(false); // allow user to send again
         }
 
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      
+        if (remainingQuestions - 1 === 0){
+          setOpenDownloadTranscript(true);
+        }
 
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
       };
+
+    //Function to download transcript as PDF
+    const handleDownloadTranscript = () => {
+      //generate transcript text
+      const transcript = messages.map(([message]) => message).join('\n');
+      //create pdf of the transcript
+      const doc = new jsPDF();
+      doc.text(transcript, 10, 10);
+      doc.save('transcript.pdf');
+      //redirect to main page
+      window.location.href = '/';
+    }
 
     return (
       <>
@@ -140,7 +157,6 @@ export default function ChatPage() {
             </Button>
           </Box>
 
-
           {/* Question Counter */}
           <Typography
             id="number-of-questions"
@@ -152,6 +168,51 @@ export default function ChatPage() {
           >
             Number of questions remaining: {remainingQuestions}
           </Typography>
+
+
+          {openDownloadTranscript &&(
+            <Modal
+              open={openDownloadTranscript}
+            >
+
+              <Box
+                sx = {{
+                  
+                  position: "absolute",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  bgcolor: "background.paper",
+                  boxShadow: 24,
+                  p: 4,
+                  borderRadius: 2,
+                  width: 400,
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+
+                <Typography variant="h6" sx={{ mb: 2, textAlign: 'center'}}>
+                  No More Questions Remaining.
+                  Please Download the Transcript and Submit to LMS.
+                </Typography>
+
+                {/* Download Transcript Button */}
+                <Button
+                  variant = "contained"
+                  color = "primary"
+                  onClick={handleDownloadTranscript}
+                  sx={{ 
+                    display: "block",
+                    margin: "0 auto", 
+                    marginTop: 2 }}
+                >
+                Download Transcript as PDF
+                </Button>
+              </Box>
+            
+            </Modal>
+          )}
         </Box>
       </>
     );
