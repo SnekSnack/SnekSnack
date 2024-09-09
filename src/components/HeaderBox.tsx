@@ -18,27 +18,44 @@ const HeaderBox: React.FC<HeaderBoxProps> = ({ title, buttonText, buttonLink }) 
       sx={{
         marginTop: 4,
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
         // alignItems: 'center',
         height: 500,
         width: '80%',
         bgcolor: 'background.paper',
         borderRadius: 2,
         boxShadow: 24,
-        p: 4,
-        mx: 'auto', // Horizontal centering
-        // textAlign: 'left',
+        // p: 4,
+        mx: 'auto', 
       }}
     >
-      <h1>{title}</h1>
-      <Link
-        className="hover:underline"
-        href={buttonLink}
+        <Box
+        sx={{
+          // marginTop: 4,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: 65,
+          width: '100%',
+          bgcolor: 'text.secondary',
+          borderRadius: 2,
+          // boxShadow: 24,
+          p: 4,
+          mx: 'auto', // Horizontal centering
+          // textAlign: 'left',
+        }}
       >
-        {buttonText}
-      </Link>
+        <h1>{title}</h1>
+        <Link
+          className="hover:underline"
+          href={buttonLink}
+        >
+          {buttonText}
+        </Link>
+      </Box>
     </Box>
+    
   );
 };
 
