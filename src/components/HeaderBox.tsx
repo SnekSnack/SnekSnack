@@ -16,12 +16,12 @@ const HeaderBox: React.FC<HeaderBoxProps> = ({ title, buttonText, buttonLink }) 
   return (
     <Box
       sx={{
-        marginTop: 6,
+        marginTop: 4,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         // alignItems: 'center',
-        height: 700,
+        height: 500,
         width: '80%',
         bgcolor: 'background.paper',
         borderRadius: 2,
