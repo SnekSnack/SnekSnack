@@ -10,8 +10,6 @@ interface HeaderBoxProps {
   buttonLink: string;
 }
 
-// INSTEAD OF THE BUTTON TAKING UP THE WHOLE COLUMN
-// SHOULD BE INSIDE HEADER AND HEADER IS CONTAINED WITHIN ANOTHER BOX
 const HeaderBox: React.FC<HeaderBoxProps> = ({ title, buttonText, buttonLink }) => {
   return (
     <Box
