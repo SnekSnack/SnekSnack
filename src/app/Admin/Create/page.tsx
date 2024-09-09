@@ -45,6 +45,7 @@ export default function Assignment() {
                     }}
                 >
                     <h1>Assignment name</h1>
+                    {/* need to change this to a model not redirect to another page */}
                     <Link
                     className="hover:underline"
                     href="/Login"
@@ -70,22 +71,61 @@ export default function Assignment() {
                 >
                     
                     {/* testing */}
+                    {/* temporary dropdown code (before using the reusable) */}
+                    {/* field 1 */}
                     <Box display="flex" alignItems= 'center'>
                         <Box 
                         sx = {{
                             width: "40%", 
-                            // bgcolor: "lightblue"
                             }}
                         >
-                            First Box (for text)
+                            Question Limit
                         </Box>
                         <Box 
-                        // width="60%" 
-                        // bgcolor="lightgreen"
                         >
-                            {/* <Dropdown></Dropdown> */}
-                            {/* trying DropdownReusable */}
-
+                            <Dropdown></Dropdown>
+                        </Box>
+                    </Box>
+                    {/* field 2 */}
+                    <Box display="flex" alignItems= 'center'>
+                        <Box 
+                        sx = {{
+                            width: "40%", 
+                            }}
+                        >
+                            Time Limit
+                        </Box>
+                        <Box 
+                        >
+                            <Dropdown></Dropdown>
+                        </Box>
+                    </Box>
+                    {/* field 3 */}
+                    <Box display="flex" alignItems= 'center'>
+                        <Box 
+                        sx = {{
+                            width: "40%", 
+                            }}
+                        >
+                            Assign To
+                        </Box>
+                        <Box 
+                        >
+                            <Dropdown></Dropdown>
+                        </Box>
+                    </Box>
+                    {/* field 4 */}
+                    <Box display="flex" alignItems= 'center'>
+                        <Box 
+                        sx = {{
+                            width: "40%", 
+                            }}
+                        >
+                            Patient
+                        </Box>
+                        <Box 
+                        >
+                            <Dropdown></Dropdown>
                         </Box>
                     </Box>
 

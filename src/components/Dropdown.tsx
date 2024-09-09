@@ -5,17 +5,17 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default function SelectLabels() {
-  const [age, setAge] = React.useState('');
+  const [value, setValue] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
+    setValue(event.target.value);
   };
 
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <Select
-          value={age}
+          value={value}
           onChange={handleChange}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
@@ -23,9 +23,9 @@ export default function SelectLabels() {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={10}>Option 1</MenuItem>
+          <MenuItem value={20}>Option 2</MenuItem>
+          <MenuItem value={30}>Option 3</MenuItem>
         </Select>
       </FormControl>
     </div>
