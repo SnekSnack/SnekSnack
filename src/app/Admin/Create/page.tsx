@@ -68,42 +68,7 @@ export default function Assignment() {
                         // textAlign: 'left',
                         }}
                 >
-                    {/* <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            width: '100%',
-                            bgcolor: 'primary.main',
-                            mx: 'auto', // Horizontal centering
-                            textAlign: 'left',
-                            }}
-                    >
-                        <Box
-                            sx={{
-                                // marginTop: 4,
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'flex-start',
-                                alignItems: 'center',
-                                // height: 65,
-                                // width: '100%',
-                                bgcolor: 'secondary.main',
-                                // borderRadius: 2,
-                                // boxShadow: 24,
-                                // p: 4,
-                                mx: 'auto', // Horizontal centering
-                                textAlign: 'left',
-                                }}
-                        >
-                            Heloooo
-                        </Box>
-                        <Box>
-                            <Dropdown></Dropdown>
-                        </Box>
-                        
-                    </Box> */}
+                    
                     {/* testing */}
                     <Box display="flex" alignItems= 'center'>
                         <Box 
@@ -120,7 +85,7 @@ export default function Assignment() {
                         >
                             {/* <Dropdown></Dropdown> */}
                             {/* trying DropdownReusable */}
-                            
+
                         </Box>
                     </Box>
 
