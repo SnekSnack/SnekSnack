@@ -6,6 +6,8 @@ import Header from "@/components/Header";
 import "@/app/globals.css";
 import HeaderBox from '@/components/HeaderBox';
 import Dropdown from '@/components/Dropdown';
+import SaveIcon from '@mui/icons-material/Save';
+import PublishIcon from '@mui/icons-material/Publish';
 
 export default function Assignment() {
     return(
@@ -45,10 +47,10 @@ export default function Assignment() {
                     }}
                 >
                     <h1>Assignment name</h1>
-                    {/* need to change this to a model not redirect to another page */}
+                    {/* need to change this to a date picker not redirect to another page */}
                     <Link
                     className="hover:underline"
-                    href="/Login"
+                    href="/Admin/Create"
                     >
                     Select release Date
                     </Link>
@@ -128,7 +130,70 @@ export default function Assignment() {
                             <Dropdown></Dropdown>
                         </Box>
                     </Box>
-
+                    {/* save assignment */}
+                    <Box
+                    sx = {{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                        gap: 1, 
+                        width: '100%',
+                        // height: '0%'
+                    }}
+                    >
+                        <Button
+                        variant="contained"
+                        href="/Admin" // REDIRECT TO ADMIN PAGE BUT WITH ASSIGNMENT ADDED??!! DK HOW YET
+                        sx={{ 
+                            bgcolor: "primary.main", 
+                            color: "white", 
+                            gap: 1 , 
+                            // width: '30%'
+                            }}
+                        // disabledcondition // NEED TO IMPLEMENT TO HANDLE ASSIGN TO AND PATIENT NOT BEING SELECTED!!
+                        >
+                            Save
+                            <SaveIcon/>
+                        </Button>
+                        <Button
+                        variant="contained"
+                        href="/Admin" // REDIRECT TO ADMIN PAGE BUT WITH ASSIGNMENT ADDED??!! DK HOW YET
+                        sx={{ 
+                            bgcolor: "primary.main", 
+                            color: "white", 
+                            gap: 1 , 
+                            // width: '30%'
+                            }}
+                        // disabledcondition // NEED TO IMPLEMENT TO HANDLE ASSIGN TO AND PATIENT NOT BEING SELECTED!!
+                        >
+                            Publish
+                            <PublishIcon/>
+                        </Button>
+                    </Box>
+                    {/* publish assignment */}
+                    {/* <Box
+                    sx = {{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        width: '100%'
+                    }}
+                    >
+                        <Button
+                        variant="contained"
+                        href="/Admin" // REDIRECT TO ADMIN PAGE BUT WITH ASSIGNMENT ADDED??!! DK HOW YET
+                        sx={{ 
+                            bgcolor: "primary.main", 
+                            color: "white", 
+                            gap: 1 , 
+                            // width: '30%'
+                            }}
+                        // disabledcondition // NEED TO IMPLEMENT TO HANDLE ASSIGN TO AND PATIENT NOT BEING SELECTED!!
+                        >
+                            Publish
+                            <PublishIcon/>
+                        </Button>
+                    </Box> */}
+                    
                     
                 </Box>
                 
