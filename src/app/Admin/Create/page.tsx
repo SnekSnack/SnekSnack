@@ -114,7 +114,8 @@ export default function Assignment() {
                         >
                             First Box (for text)
                         </Box>
-                        <Box width="60%" 
+                        <Box 
+                        // width="60%" 
                         // bgcolor="lightgreen"
                         >
                             <Dropdown></Dropdown>
