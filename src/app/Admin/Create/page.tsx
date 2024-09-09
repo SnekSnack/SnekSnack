@@ -1,8 +1,6 @@
-"use client";
-
 import { Box, Button } from "@mui/material";
 import Header from "@/components/Header";
-import "@/app/globals.css";
+import "@/app/globals.css"
 
 
 export default function Admin() {
@@ -10,8 +8,7 @@ export default function Admin() {
         <>
             <Header userName="username"/>
             <Box className="content-wrapper" sx={{ paddingTop: '80px' }}>
-                <Button variant="contained" href="/Admin/Create" sx={{ width: '1000px' , height: '50px'}}>+ Create Assignment</Button>
-                <Button variant="contained" href="/Admin/Manage" sx={{ width: '1000px' , height: '50px'}}>Manage Users</Button>
+                create assignment
             </Box>
         </>
         

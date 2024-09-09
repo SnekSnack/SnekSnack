@@ -1,24 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Button, Modal,TextField, Typography } from "@mui/material";
+import React, { useState, useRef } from "react";
+import { Box, Button, TextField, Typography, IconButton } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import MicIcon from '@mui/icons-material/Mic';
 //import Header from "@/components/Header";
 import "@/app/globals.css"
+
+function getMessageResponse(message:String) {
+  const reversedMessage = message.split("").reverse().join("");
+  return reversedMessage;
+}
 
 export default function ChatPage() {
 
     /* Components */
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<[string, boolean][]>([]);
     const [remainingQuestions, setRemainingQuestions] = useState(10);
     const [inputValue, setInputValue] = useState<string>("");
+    const [disableSend, setDisableSend] = useState(false);
+
+    const chatEndRef = useRef<null | HTMLDivElement>(null);
 
     const handleSendMessage = () => {
         if (inputValue.trim() !== "" && remainingQuestions > 0) {
-          setMessages([...messages, inputValue]); 
+          setDisableSend(true); // stop user from sending anything
+
+          var response = getMessageResponse(inputValue);
+          
+          setMessages([...messages, [inputValue, true], [response, false]]);
+
           setInputValue(""); 
           setRemainingQuestions(remainingQuestions - 1); 
+          setDisableSend(false); // allow user to send again
         }
+
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
       };
 
     return (
@@ -57,13 +75,13 @@ export default function ChatPage() {
               <Box sx={{
                   width: "100%",
                   display: 'flex',
-                  justifyContent: (true) ? 'flex-end' : 'flex-start',
+                  justifyContent: (message[1]) ? 'flex-end' : 'flex-start',
                 }}
               >
                 <Box
                   key={index}
                   sx={{
-                    bgcolor: (true) ? "#d1c4e9" : "#dddddd",
+                    bgcolor: (message[1]) ? "#d1c4e9" : "#dddddd",
                     p: 2,
                     mb: 1,
                     borderRadius: 1,
@@ -72,18 +90,24 @@ export default function ChatPage() {
                       sm: '400px',
                       md: '600px',
                     },
-                    alignSelf: (true) ? "flex-end" : "flex-start", // Align chat bubbles to the left
+                    alignSelf: (message[1]) ? "flex-end" : "flex-start", // Align chat bubbles to the left
                   }}
                 >
-                  <Typography variant="body1">{message}</Typography>
+                  <Typography variant="body1">{message[0]}</Typography>
                 </Box>
               </Box>
             ))}
+            <div ref={chatEndRef} />
           </Box>
-
+          
 
           {/* TEXTBOX */}
           <Box sx={{ display: "flex", alignSelf: "center", justifyContent: "center", gap: 2 }}>
+            
+            <IconButton color="primary">
+              <MicIcon />
+            </IconButton>
+            
             <TextField
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -96,12 +120,20 @@ export default function ChatPage() {
                   md: '700px',
                 }
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter'){
+                  handleSendMessage();
+                }
+              }}
             />
+
+
+
             <Button
               variant="contained"
               onClick={handleSendMessage}
               sx={{ bgcolor: "primary.main", color: "white", gap: 1 }}
-              disabled={remainingQuestions === 0} // Disable the button if no questions remain
+              disabled={(disableSend) || (remainingQuestions === 0)} // Disable the button if no questions remain
             >
               Send
               <SendIcon/>
