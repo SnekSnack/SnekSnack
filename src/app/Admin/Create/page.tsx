@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Box, Button } from "@mui/material";
 import Header from "@/components/Header";
 import "@/app/globals.css";
-import HeaderBox from '@/components/HeaderBox';
 import Dropdown from '@/components/Dropdown';
 import SaveIcon from '@mui/icons-material/Save';
 import PublishIcon from '@mui/icons-material/Publish';
