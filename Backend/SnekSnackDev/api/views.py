@@ -7,6 +7,8 @@ from .models import *
 from rest_framework.response import Response
 from .perms import *
 
+
+    
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
 

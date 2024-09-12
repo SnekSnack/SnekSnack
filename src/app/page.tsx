@@ -9,10 +9,10 @@ export default function Home() {
 
   return (
     <>
-      <Header userName="username"/>
+      <Header userName="username" />
 
       <Box className="content-wrapper">
-        <Button className="button" href="/Chat" variant="contained" color="primary">Start chat</Button>
+        <Button className="button" href="/Test" variant="contained" color="primary">Start chat</Button>
       </Box>
     </>
   );

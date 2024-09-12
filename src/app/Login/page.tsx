@@ -1,13 +1,55 @@
 "use client"
+import api from "@/api";
+import { useRouter } from 'next/navigation'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
+import "../styles/Form.css"
+
 
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box, Link } from '@mui/material';
 import "@/app/globals.css"
 
+function submit() {
+	const router = useRouter();
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			const res = await api.post("/api/token/", { username, password })
+			localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+			router.push("/")
+		}
+		catch (error) {
+			alert(error)
+		}
+	};
+}
+
+
 export default function Login() {
 	const [isStaff, setIsStaff] = useState(false);
-	const handleToggle = () => {
-		setIsStaff((prev) => !prev);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+	const router = useRouter();
+
+	// const handleToggle = () => {
+	// 	setIsStaff((prev) => !prev);
+	// };
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		try {
+			const res = await api.post("/api/token/", { username, password })
+			localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+			router.push("/")
+		}
+		catch (error) {
+			alert(error)
+		}
 	};
 
 	return (
@@ -34,7 +76,7 @@ export default function Login() {
 						method="POST"
 					>
 						<TextField
-							sx={{ backgroundColor: 'white'}}
+							sx={{ backgroundColor: 'white' }}
 							margin="normal"
 							required
 							fullWidth
@@ -43,9 +85,10 @@ export default function Login() {
 							name="username"
 							autoComplete="username"
 							autoFocus
+							onChange={(e) => setUsername(e.target.value)}
 						/>
 						<TextField
-							sx={{ backgroundColor: 'white'}}
+							sx={{ backgroundColor: 'white' }}
 							margin="normal"
 							required
 							fullWidth
@@ -54,6 +97,7 @@ export default function Login() {
 							type="password"
 							id="password"
 							autoComplete="current-password"
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<Button
 							className="button mt-4"
@@ -69,10 +113,10 @@ export default function Login() {
 				</Box>
 			</Container>
 			<Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-				<Link href="#" variant="body2" onClick={handleToggle}>
+				<Link href="#" variant="body2" onClick={ }>
 					{isStaff ? 'Switch to User Login' : 'Switch to Staff Login'}
 				</Link>
 			</Box>
 		</Box>
-  )
+	)
 }

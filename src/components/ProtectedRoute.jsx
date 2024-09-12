@@ -1,20 +1,23 @@
-import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import api from "../api";
-import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
+"use client"
+
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";; // Assuming jwt-decode is installed
+import api from "../api"; // Assuming api is properly set up
+import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"; // Replace with actual values/constants
 
-// wrapper for protected route so the you need authentication token to access
-
-// re routes the unauthenticated to login
 function ProtectedRoute({ children }) {
+
     const [isAuthorized, setIsAuthorized] = useState(null);
 
+    console.log(localStorage.getItem(ACCESS_TOKEN));
     // once root is opened check token
     useEffect(() => {
-        auth().catch(() => setIsAuthorized(false))
-    }, [])
-
+        if (typeof window !== "undefined") {
+            // Ensure this only runs on the client side
+            auth().catch(() => setIsAuthorized(false));
+        }
+    }, []);
 
     const refreshToken = async () => {
         // get refresh token
@@ -24,16 +27,15 @@ function ProtectedRoute({ children }) {
             const res = await api.post("/api/token/refresh/", {
                 refresh: refreshToken,
             });
+            console.log(res.status)
             // if successful set token 
             if (res.status === 200) {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access)
-                setIsAuthorized(true)
+                localStorage.setItem(ACCESS_TOKEN, res.data.access);
+                setIsAuthorized(true);
             } else {
-                setIsAuthorized(false)
+                setIsAuthorized(false);
             }
-        }
-        // when in doubt just deny 
-        catch (error) {
+        } catch (error) {
             console.log(error);
             setIsAuthorized(false);
         }
@@ -69,9 +71,11 @@ function ProtectedRoute({ children }) {
         return <div>Loading...</div>;
     }
 
-    // return to the wrapped page or the login page
-    return isAuthorized ? children : <Navigate to="/login" />;
+    if (!isAuthorized) {
+        <Navigate to="/login" />;
+        return null; // While redirecting, return nothing to avoid rendering protected content
+    }
+    return children; // Render the protected content if authorized
 }
 
 export default ProtectedRoute;
-
