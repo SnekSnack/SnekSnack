@@ -7,10 +7,9 @@ import api from "../api"; // Assuming api is properly set up
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"; // Replace with actual values/constants
 
 function ProtectedRoute({ children }) {
-
+    console.log("TESTING");
     const [isAuthorized, setIsAuthorized] = useState(null);
 
-    console.log(localStorage.getItem(ACCESS_TOKEN));
     // once root is opened check token
     useEffect(() => {
         if (typeof window !== "undefined") {
