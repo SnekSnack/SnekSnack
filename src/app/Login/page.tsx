@@ -1,4 +1,4 @@
-"use client"
+p0o; '?"use client"
 import api from "@/api";
 import { useRouter } from 'next/navigation'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
@@ -11,7 +11,6 @@ import "@/app/globals.css"
 
 export default function Login() {
 	const [isStaff, setIsStaff] = useState(false);
-
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -19,7 +18,7 @@ export default function Login() {
 
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
-	
+
 	const handleToggle = () => {
 		setIsStaff((prev) => !prev);
 	};
@@ -31,7 +30,7 @@ export default function Login() {
 			// const res = await api.post("/api/token/", { username, password })
 			// localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			// localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-      		handleLogin()
+			handleLogin()
 		}
 		catch (error) {
 			alert(error)
@@ -50,7 +49,7 @@ export default function Login() {
 	const handleAgree = () => {
 		setOpenConsentModal(false);
 		//window.location.href = '/';
-    router.push("/")
+		router.push("/")
 	}
 
 	return (
