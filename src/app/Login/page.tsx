@@ -1,11 +1,22 @@
 "use client"
+import api from "@/api";
+import { useRouter } from 'next/navigation'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
+
 
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box, Link, Modal } from '@mui/material';
 import "@/app/globals.css"
 
+
 export default function Login() {
 	const [isStaff, setIsStaff] = useState(false);
+
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+	const router = useRouter();
+
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
 	
@@ -13,15 +24,29 @@ export default function Login() {
 		setIsStaff((prev) => !prev);
 	};
 
-	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		//console.log("HELLO");
+		try {
+			const res = await api.post("/api/token/", { username, password })
+			localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+      handleLogin()
+		}
+		catch (error) {
+			alert(error)
+			console.log(error);
+		}
+	};
+	const handleLogin = () => {
 		setIsLoggedIn(true);
 		setOpenConsentModal(true);
 	}
 
 	const handleAgree = () => {
 		setOpenConsentModal(false);
-		window.location.href = '/';
+		//window.location.href = '/';
+    router.push("/")
 	}
 
 	return (
@@ -44,12 +69,12 @@ export default function Login() {
 					<Box
 						component="form"
 						sx={{ mt: 1 }}
-						action={isStaff ? '/staff-login' : '/user-login'} // endpoints?
+						action={isStaff ? '/staff-login' : '/user-login'}
 						method="POST"
-						onSubmit={handleLogin}
+						onSubmit={handleSubmit}
 					>
 						<TextField
-							sx={{ backgroundColor: 'white'}}
+							sx={{ backgroundColor: 'white' }}
 							margin="normal"
 							required
 							fullWidth
@@ -58,9 +83,11 @@ export default function Login() {
 							name="username"
 							autoComplete="username"
 							autoFocus
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
 						/>
 						<TextField
-							sx={{ backgroundColor: 'white'}}
+							sx={{ backgroundColor: 'white' }}
 							margin="normal"
 							required
 							fullWidth
@@ -69,6 +96,8 @@ export default function Login() {
 							type="password"
 							id="password"
 							autoComplete="current-password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<Button
 							className="button mt-4"
@@ -124,5 +153,5 @@ export default function Login() {
 			</Modal>
 
 		</Box>
-  )
+	)
 }
