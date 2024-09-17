@@ -28,10 +28,10 @@ export default function Login() {
 		e.preventDefault();
 		//console.log("HELLO");
 		try {
-			const res = await api.post("/api/token/", { username, password })
-			localStorage.setItem(ACCESS_TOKEN, res.data.access);
-			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-      handleLogin()
+			// const res = await api.post("/api/token/", { username, password })
+			// localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			// localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+      		handleLogin()
 		}
 		catch (error) {
 			alert(error)
@@ -40,7 +40,11 @@ export default function Login() {
 	};
 	const handleLogin = () => {
 		setIsLoggedIn(true);
-		setOpenConsentModal(true);
+		if (!isStaff) {
+			setOpenConsentModal(true);
+		} else {
+			router.push("/");
+		}
 	}
 
 	const handleAgree = () => {

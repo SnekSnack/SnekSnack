@@ -1,12 +1,15 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+//import { Navigate } from "react-router-dom";
+import { useRouter } from 'next/navigation'
 import { jwtDecode } from "jwt-decode";; // Assuming jwt-decode is installed
 import api from "../api"; // Assuming api is properly set up
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"; // Replace with actual values/constants
 
 function ProtectedRoute({ children }) {
+    const router = useRouter();
+
     console.log("TESTING");
     const [isAuthorized, setIsAuthorized] = useState(null);
 
@@ -71,7 +74,8 @@ function ProtectedRoute({ children }) {
     }
 
     if (!isAuthorized) {
-        <Navigate to="/login" />;
+        router.push("/Login");
+        //<Navigate to="/Login" />;
         return null; // While redirecting, return nothing to avoid rendering protected content
     }
     return children; // Render the protected content if authorized

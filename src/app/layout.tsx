@@ -32,11 +32,11 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <body className={inter.className}>
-            {/*<ProtectedRoute>*/}
+            {/* <ProtectedRoute> */}
               <div>
                 {children}
               </div>
-            {/*</ProtectedRoute>*/}
+            {/* </ProtectedRoute> */}
           </body>
         </ThemeProvider>
     </html>
