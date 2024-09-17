@@ -12,7 +12,8 @@ export default function Home() {
       <Header userName="username" />
 
       <Box className="content-wrapper">
-        <Button className="button" href="/Test" variant="contained" color="primary">Start chat</Button>
+        <Button className="button" disabled={false} href="/Chat" variant="contained" color="primary">Start chat</Button>
+        <Button className="button" disabled={true} variant="contained" color="primary">Download chat transcript</Button>
       </Box>
     </>
   );

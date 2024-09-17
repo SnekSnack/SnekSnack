@@ -1,11 +1,11 @@
-"use client"
+p0o; '?"use client"
 import api from "@/api";
 import { useRouter } from 'next/navigation'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 
 
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Link } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Link, Modal } from '@mui/material';
 import "@/app/globals.css"
 
 
@@ -15,7 +15,8 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 
 	const router = useRouter();
-
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [openConsentModal, setOpenConsentModal] = useState(false);
 	const handleToggle = () => {
 		setIsStaff((prev) => !prev);
 	};
@@ -102,6 +103,42 @@ export default function Login() {
 					{isStaff ? 'Switch to User Login' : 'Switch to Staff Login'}
 				</Link>
 			</Box>
+
+			{/* Consent Popup Modal */}
+			<Modal
+				open={openConsentModal}
+				onClose={() => setOpenConsentModal(false)}
+			>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						width: 400,
+						bgcolor: 'background.paper',
+						boxShadow: 24,
+						p: 4,
+						borderRadius: 2,
+					}}
+				>
+					<Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+						AI Consent
+					</Typography>
+					<Typography sx={{ mb: 3 }}>
+						You consent to the use of Artificial Intelligence in this assignment. Please click "Agree" to proceed.
+					</Typography>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={handleAgree}
+						fullWidth
+					>
+						Agree
+					</Button>
+				</Box>
+			</Modal>
+
 		</Box>
 	)
 }
