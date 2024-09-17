@@ -1,4 +1,4 @@
-p0o; '?"use client"
+"use client"
 import api from "@/api";
 import { useRouter } from 'next/navigation'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
@@ -27,24 +27,24 @@ export default function Login() {
 		e.preventDefault();
 		//console.log("HELLO");
 		try {
-			// const res = await api.post("/api/token/", { username, password })
-			// localStorage.setItem(ACCESS_TOKEN, res.data.access);
-			// localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-			handleLogin()
+			const res = await api.post("/api/token/", { username, password })
+			localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+			// handleLogin()
 		}
 		catch (error) {
 			alert(error)
 			console.log(error);
 		}
 	};
-	const handleLogin = () => {
-		setIsLoggedIn(true);
-		if (!isStaff) {
-			setOpenConsentModal(true);
-		} else {
-			router.push("/");
-		}
-	}
+	// const handleLogin = () => {
+	// 	setIsLoggedIn(true);
+	// 	if (!isStaff) {
+	// 		setOpenConsentModal(true);
+	// 	} else {
+	// 		router.push("/");
+	// 	}
+	// }
 
 	const handleAgree = () => {
 		setOpenConsentModal(false);
