@@ -1,7 +1,7 @@
 "use client"
 import api from "@/api";
 import { useRouter } from 'next/navigation'
-import { ACCESS_TOKEN, REFRESH_TOKEN, EMAIL, USER_ID } from "@/constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 
 
 import React, { useState } from 'react';
@@ -29,12 +29,7 @@ export default function Login() {
 			const res = await api.post("/api/token/", { username, password });
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-
-			const userInfo = await api.post("/api/login/", { username, password });
-			localStorage.setItem(EMAIL, userInfo.data.email);
-			localStorage.setItem(USER_ID, userInfo.data.id);
-			console.log(userInfo.data.id);
-			// router.push("/")
+			console.log(localStorage.getItem(ACCESS_TOKEN))
 		}
 		catch (error) {
 			alert(error)

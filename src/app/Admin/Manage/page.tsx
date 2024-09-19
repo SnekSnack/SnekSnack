@@ -19,19 +19,10 @@ export default function Admin() {
     // function to get item
     const getBots = () => {
         api.get("/api/bots/")
-            .then((res) => {
-                if (res.status == 403) {
-                    // Redirect to the forbidden page if 403
-                    router.push('/403');
-                } else {
-                    return res.data;
-                }
-            })
+            .then((res) => res.data)
             .then((data) => {
-                if (data) {
-                    setBots(data);
-                    console.log(data);
-                }
+                setBots(data);
+                console.log(data);
             })
             .catch((err) => {
                 console.error(err);

@@ -1,22 +1,26 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "./constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
-// basically any requests will be done by this so that it can authenticate the token
-const apiUrl = "/choreo-apis/awbo/backend/rest-api-be2/v1.0";
+
+// Set the baseURL based on the environment
 
 const api = axios.create({
-    baseURL: "http://localhost:8000" ? "http://localhost:8000" : apiUrl,
+    baseURL: "http://127.0.0.1:8000"
 });
 
 api.interceptors.request.use(
     (config) => {
+        // Retrieve the access token from localStorage
         const token = localStorage.getItem(ACCESS_TOKEN);
+        console.log("ACCESS_TOKEN", localStorage.getItem(ACCESS_TOKEN));
+        console.log("REFRESH_TOKEN", localStorage.getItem(REFRESH_TOKEN));
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            config.headers.Authorization = `Bearer ${token} `;
         }
         return config;
     },
     (error) => {
+
         return Promise.reject(error);
     }
 );
