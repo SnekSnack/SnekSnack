@@ -39,23 +39,25 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Quick guide to fetching data;
 
-Make sure to use 
-```import api from "../api";```
-
-
+imports:
+```
+import ProtectedRoute from "@/components/ProtectedRoute";
+import api from "@/api.js";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+```
 
 
 ### Load data on page load
 ```
-<!-- saves the data-->
-const [bots, setBots] = useState([]);
-
 useEffect(() => {
     getBots();
 }, []);
 ```
 ### Fetching the data
 ```
+const [bots, setBots] = useState([]);
+
 const getBots = () => {
     <!-- use the api -->
         api
@@ -72,4 +74,25 @@ const getBots = () => {
             <!-- returns an alert if there is an error -->
             .catch((err) => alert(err));
     };
-    ```
+```
+
+### authentication
+- Special permissions are handled by the backend just ask el to limit it
+- use ProtectedRoute for pages that needs a login
+```
+        <ProtectedRoute>
+            <Header userName="username" />
+            <Box className="content-wrapper" sx={{ paddingTop: '80px' }}>
+                I Like cookies
+            </Box>
+        </ProtectedRoute>
+```
+
+### Backend Info
+
+- model details: backend/sneksnackdev/api/models
+- data fetch list: backend/sneksnackdev/api/urls
+- list of fetch function: backend/sneksnackdev/api/views
+- list of perms: backend/sneksnackdev/api/perms
+> [!WARNING]
+> Please dont touch these files without permission 

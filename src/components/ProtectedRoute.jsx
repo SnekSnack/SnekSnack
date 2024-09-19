@@ -15,10 +15,8 @@ function ProtectedRoute({ children }) {
 
     // once root is opened check token
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            // Ensure this only runs on the client side
-            auth().catch(() => setIsAuthorized(false));
-        }
+        // Ensure this only runs on the client side
+        auth().catch(() => setIsAuthorized(false));
     }, []);
 
     const refreshToken = async () => {

@@ -14,7 +14,6 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 
 	const router = useRouter();
-
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
 
@@ -22,7 +21,7 @@ export default function Login() {
 		e.preventDefault();
 		//console.log("HELLO");
 		try {
-			const res = await api.post("/api/token/", { username, password })
+			const res = await api.post("/api/token/", { username, password });
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 			setOpenConsentModal(true);
