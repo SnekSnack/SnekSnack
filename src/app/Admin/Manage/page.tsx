@@ -5,11 +5,11 @@ import "@/app/globals.css"
 import ProtectedRoute from "@/components/ProtectedRoute";
 import api from "@/api.js";
 import { useState, useEffect } from 'react';
-
+import { useRouter } from 'next/navigation';
 
 export default function Admin() {
     const [bots, setBots] = useState([]);
-
+    const router = useRouter();
 
     // on load get bots
     useEffect(() => {
@@ -19,32 +19,32 @@ export default function Admin() {
     // function to get item
     const getBots = () => {
         api.get("/api/bots/")
-            .then((res) => res.data)
-            .then((data) => {
-                setBots(data);
-                console.log(data);
+            .then((res) => {
+                if (res.status == 403) {
+                    // Redirect to the forbidden page if 403
+                    router.push('/403');
+                } else {
+                    return res.data;
+                }
             })
-            .catch((err) => alert(err));
+            .then((data) => {
+                if (data) {
+                    setBots(data);
+                    console.log(data);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     };
     return (
-        <>
+        <ProtectedRoute>
             <Header userName="username" />
             <Box className="content-wrapper" sx={{ paddingTop: '80px' }}>
                 {/* in theory they shouldnt get access to the data */}
 
             </Box>
-            <ProtectedRoute>
-                <ul>
-                    {bots.map((bot, index) => (
-                        <li key={index}>{bot}</li>
-                    ))}
-                </ul>
-            </ProtectedRoute>
-        </>
-
-
-
-
+        </ProtectedRoute>
     )
 
 

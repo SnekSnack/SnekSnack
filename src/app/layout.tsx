@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import ProtectedRoute from "@/components/ProtectedRoute";
 import theme from './theme';
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -29,16 +28,14 @@ export default function RootLayout({
       </head>
       {/* ThemeProvider and CssBaseLine overrides MUI components' default style.
           Edit styles in 'theme.js' */}
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <body className={inter.className}>
-            {/* <ProtectedRoute> */}
-              <div>
-                {children}
-              </div>
-            {/* </ProtectedRoute> */}
-          </body>
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <body className={inter.className}>
+          <div>
+            {children}
+          </div>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

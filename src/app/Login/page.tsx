@@ -15,7 +15,6 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 
 	const router = useRouter();
-
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
 

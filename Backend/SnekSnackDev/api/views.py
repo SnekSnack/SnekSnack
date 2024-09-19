@@ -19,13 +19,15 @@ class CreateUserView(generics.CreateAPIView):
     
 
 class BotCreate(generics.ListCreateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = BotSerializer
     # need to login
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     # to get access to self
     def get_queryset(self):
+        print("GETTING BOTS")
         user = self.request.user
+        print(user)
         # only get the notes current user created
         return ChatBot.objects.all()
     
