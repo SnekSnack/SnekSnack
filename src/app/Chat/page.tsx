@@ -89,14 +89,13 @@ export default function ChatPage() {
 
             {/* Chat Bubbles */}
             {messages.map((message, index) => (
-              <Box sx={{
+              <Box key={index} sx={{
                   width: "100%",
                   display: 'flex',
                   justifyContent: (message[1]) ? 'flex-end' : 'flex-start',
                 }}
               >
                 <Box
-                  key={index}
                   sx={{
                     bgcolor: (message[1]) ? "#d1c4e9" : "#dddddd",
                     p: 2,
