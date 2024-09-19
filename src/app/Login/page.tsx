@@ -122,7 +122,7 @@ export default function Login() {
 						AI Consent
 					</Typography>
 					<Typography sx={{ mb: 3 }}>
-						By clicking "Agree", you consent to the use of Artificial Intelligence in this assignment.
+						By clicking &quot;Agree&quot;, you consent to the use of Artificial Intelligence in this assignment.
 					</Typography>
 					<Button
 						variant="contained"
