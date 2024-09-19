@@ -84,3 +84,17 @@ body {
   height: 100vh; 
   width: 100vw;  
 }
+
+.modal-form {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 5%);
+  width: 90vw; /* Adjust the width as needed */
+  max-width: 1200px; /* Set a maximum width */
+  max-height: 90vh; /* Set a maximum height */
+  background-color: #fff; /* Assuming a CSS variable or custom property for background color */
+  border: 2px solid #000;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
+  padding: 30px; /* Assuming a padding equivalent of 4 units */
+  overflow: auto; /* Enable scrolling */
+}
