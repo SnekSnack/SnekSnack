@@ -5,12 +5,11 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 
 
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Link, Modal } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Modal } from '@mui/material';
 import "@/app/globals.css"
 
 
 export default function Login() {
-	const [isStaff, setIsStaff] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -19,10 +18,6 @@ export default function Login() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
 
-	const handleToggle = () => {
-		setIsStaff((prev) => !prev);
-	};
-
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		//console.log("HELLO");
@@ -30,30 +25,21 @@ export default function Login() {
 			const res = await api.post("/api/token/", { username, password })
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-			// handleLogin()
+			setOpenConsentModal(true);
 		}
 		catch (error) {
 			alert(error)
 			console.log(error);
 		}
 	};
-	// const handleLogin = () => {
-	// 	setIsLoggedIn(true);
-	// 	if (!isStaff) {
-	// 		setOpenConsentModal(true);
-	// 	} else {
-	// 		router.push("/");
-	// 	}
-	// }
 
 	const handleAgree = () => {
 		setOpenConsentModal(false);
-		//window.location.href = '/';
 		router.push("/")
 	}
 
 	return (
-		<Box className="content-wrapper justify-center">
+		<Box className="content-wrapper-full justify-center">
 			<Container component="main" maxWidth="xs">
 				<Box
 					sx={{
@@ -63,16 +49,15 @@ export default function Login() {
 						padding: 3,
 						boxShadow: 3,
 						borderRadius: 2,
-						backgroundColor: isStaff ? 'white' : '#ddd',
+						backgroundColor: 'white',
 					}}
 				>
 					<Typography component="h1" variant="h5">
-						{isStaff ? 'Staff Login' : 'Login'}
+						Login
 					</Typography>
 					<Box
 						component="form"
 						sx={{ mt: 1 }}
-						action={isStaff ? '/staff-login' : '/user-login'}
 						method="POST"
 						onSubmit={handleSubmit}
 					>
@@ -114,11 +99,6 @@ export default function Login() {
 					</Box>
 				</Box>
 			</Container>
-			<Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-				<Link href="#" variant="body2" onClick={handleToggle}>
-					{isStaff ? 'Switch to User Login' : 'Switch to Staff Login'}
-				</Link>
-			</Box>
 
 			{/* Consent Popup Modal */}
 			<Modal
@@ -142,7 +122,7 @@ export default function Login() {
 						AI Consent
 					</Typography>
 					<Typography sx={{ mb: 3 }}>
-						You consent to the use of Artificial Intelligence in this assignment. Please click "Agree" to proceed.
+						By clicking "Agree", you consent to the use of Artificial Intelligence in this assignment.
 					</Typography>
 					<Button
 						variant="contained"
