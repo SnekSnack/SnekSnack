@@ -6,9 +6,27 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import *
 from rest_framework.response import Response
 from .perms import *
+from django.contrib.auth import authenticate, login
+from rest_framework.views import APIView
+from rest_framework import status
 
+class LoginView(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                print("loggedIn")
+                login(request, user)
+                return Response({
+                    "id": user.pk,
+                    "email": user.email,
+                })
+            return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
 
@@ -21,11 +39,10 @@ class CreateUserView(generics.CreateAPIView):
 class BotCreate(generics.ListCreateAPIView):
     serializer_class = BotSerializer
     # need to login
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     # to get access to self
     def get_queryset(self):
-        print("GETTING BOTS")
         user = self.request.user
         print(user)
         # only get the notes current user created

@@ -1,7 +1,7 @@
 "use client"
 import api from "@/api";
 import { useRouter } from 'next/navigation'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, EMAIL, USER_ID } from "@/constants";
 
 
 import React, { useState } from 'react';
@@ -26,24 +26,21 @@ export default function Login() {
 		e.preventDefault();
 		//console.log("HELLO");
 		try {
-			const res = await api.post("/api/token/", { username, password })
+			const res = await api.post("/api/token/", { username, password });
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-			// handleLogin()
+
+			const userInfo = await api.post("/api/login/", { username, password });
+			localStorage.setItem(EMAIL, userInfo.data.email);
+			localStorage.setItem(USER_ID, userInfo.data.id);
+			console.log(userInfo.data.id);
+			// router.push("/")
 		}
 		catch (error) {
 			alert(error)
 			console.log(error);
 		}
 	};
-	// const handleLogin = () => {
-	// 	setIsLoggedIn(true);
-	// 	if (!isStaff) {
-	// 		setOpenConsentModal(true);
-	// 	} else {
-	// 		router.push("/");
-	// 	}
-	// }
 
 	const handleAgree = () => {
 		setOpenConsentModal(false);
