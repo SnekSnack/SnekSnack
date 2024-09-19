@@ -133,8 +133,8 @@ export default function ChatPage() {
               sx={{ flexGrow: 1, 
                 width: {          
                   xs: 'full', 
-                  sm: '450px',
-                  md: '700px',
+                  sm: '420px',
+                  md: '690px',
                 }
               }}
               onKeyDown={(e) => {
