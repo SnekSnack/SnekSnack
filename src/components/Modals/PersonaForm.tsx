@@ -77,15 +77,15 @@ export default function PersonaForm({ open, onClose, onSubmit, persona }: Person
     }
   }, [persona]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: string, key: string) => {
+  const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, section: string, key: string) => {
     const { value } = e.target;
     setFormData((prevState: any) => ({
       ...prevState,
