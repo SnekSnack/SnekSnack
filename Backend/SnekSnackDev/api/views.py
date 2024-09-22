@@ -27,7 +27,7 @@ class BotCreate(generics.ListCreateAPIView):
         user = self.request.user
         auth_header = self.request.META.get('HTTP_AUTHORIZATION')
         # only get the notes current user created
-        return ChatBot.objects.all()
+        return Personas.objects.all()
     
     # override the functions to get custom functionality
     def perform_create(self, serializer):
@@ -38,14 +38,14 @@ class BotCreate(generics.ListCreateAPIView):
             print(serializer.errors)
     
 class BotDelete(generics.DestroyAPIView):
-    serializer_class = ChatBot
+    serializer_class = Personas
     
     authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOnly]
 
     def get_queryset(self):
         user = self.request.user
-        return ChatBot.objects.all()
+        return Personas.objects.all()
 
 class AssignmentCreate(generics.ListCreateAPIView):
     serializer_class = AssignmentSerializer

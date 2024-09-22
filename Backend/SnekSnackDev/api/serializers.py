@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
     
 class BotSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChatBot
+        model = Personas
         fields = "__all__"
         # so only backend can change
 
