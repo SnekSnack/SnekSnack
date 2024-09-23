@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonaForm from '@/components/Modals/PersonaForm';
+import Chat from '@/components/Modals/Chat';
 import Header from '@/components/Header';
 import "../../globals.css"
 
@@ -12,6 +14,15 @@ export default function AdminPage() {
   const [personas, setPersonas] = useState<any[]>([]); // List of personas
   const [selectedPersona, setSelectedPersona] = useState<any | null>(null); // For editing a persona
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close the form modal
+  const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
+
+  const handleChatOpen = () => setIsChatOpen(true);
+  const handleChatClose = (event: any, reason: string) => {
+    setIsChatOpen(false);
+    setSelectedPersona(null);
+  };
+
+  const doNothing = () => {}
 
   // Open the modal to create or edit a persona
   const handleFormOpen = () => setIsFormOpen(true);
@@ -32,6 +43,11 @@ export default function AdminPage() {
       setPersonas((prev) => [...prev, { ...newPersona, id: prev.length + 1 }]);
     }
     handleFormClose();
+  };
+
+  const handleChat = (persona: any) => {
+    setSelectedPersona(persona);
+    handleChatOpen();
   };
 
   // Edit persona handler
@@ -78,6 +94,9 @@ export default function AdminPage() {
                 <TableCell>{persona.condition.name}</TableCell>
                 <TableCell>{persona.personality_traits.overall}</TableCell>
                 <TableCell>
+                  <IconButton onClick={() => handleChat(persona)}>
+                    <ChatIcon />
+                  </IconButton>
                   <IconButton onClick={() => handleEdit(persona)}>
                     <EditIcon />
                   </IconButton>
@@ -98,6 +117,15 @@ export default function AdminPage() {
           onClose={handleFormClose}
           onSubmit={handleFormSubmit}
           persona={selectedPersona} // Pass selected persona for editing
+        />
+      )}
+      {isChatOpen && (
+        <Chat
+          open={isChatOpen}
+          onClose={handleChatClose}
+          onSubmit={doNothing}
+          //assignment={null}
+          persona={selectedPersona}
         />
       )}
 		</Box>
