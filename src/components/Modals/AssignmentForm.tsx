@@ -23,7 +23,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
     description: '',
     release_date: dayjs(),
     due_date: dayjs(),
-    question_limit: '',
+    question_limit: 10,
     persona: '',
   });
 
@@ -60,7 +60,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
         description: '',
         release_date: dayjs(),
         due_date: dayjs(),
-        question_limit: '',
+        question_limit: 10,
         persona: '',
       });
     }
@@ -68,10 +68,12 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === "question_limit") {
+      const intValue = Math.floor(Number(value)); // Convert to integer
+      setFormData((prev) => ({ ...prev, [name]: intValue >= 0 ? intValue : 0 }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSelectChange = (e: SelectChangeEvent<string>) => {
@@ -151,6 +153,8 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
               margin="normal"
               value={formData.question_limit}
               onChange={handleChange}
+              type="number" // Restrict to number input
+              inputProps={{ min: "0", step: "1" }}
             />
 
             <FormControl fullWidth margin="normal">
