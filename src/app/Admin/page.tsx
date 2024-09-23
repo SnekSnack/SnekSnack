@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentForm from '@/components/Modals/AssignmentForm';
+import Chat from '@/components/Modals/Chat';
 import Header from '@/components/Header';
 import "../globals.css"
 
@@ -12,6 +14,15 @@ export default function AdminPage() {
   const [assignments, setAssignments] = useState<any[]>([]); // Store all assignments
   const [selectedAssignment, setSelectedAssignment] = useState<any | null>(null); // For editing
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close modal
+  const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
+
+  const handleChatOpen = () => setIsChatOpen(true);
+  const handleChatClose = (event: any, reason: string) => {
+    setIsChatOpen(false);
+    setSelectedAssignment(null);
+  };
+
+  const doNothing = () => {}
 
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
@@ -30,6 +41,11 @@ export default function AdminPage() {
       setAssignments((prev) => [...prev, { ...newAssignment, id: prev.length + 1 }]);
     }
     handleFormClose();
+  };
+
+  const handleChat = (assignment: any) => {
+    setSelectedAssignment(assignment);
+    handleChatOpen();
   };
 
   const handleEdit = (assignment: any) => {
@@ -78,6 +94,9 @@ export default function AdminPage() {
                 <TableCell>{assignment.question_limit}</TableCell>
                 <TableCell>{assignment.persona}</TableCell>
                 <TableCell>
+                  <IconButton onClick={() => handleChat(assignment)}>
+                    <ChatIcon />
+                  </IconButton>
                   <IconButton onClick={() => handleEdit(assignment)}>
                     <EditIcon />
                   </IconButton>
@@ -100,32 +119,16 @@ export default function AdminPage() {
           assignment={selectedAssignment}
         />
       )}
+      {isChatOpen && (
+        <Chat
+          open={isChatOpen}
+          onClose={handleChatClose}
+          onSubmit={doNothing}
+          assignment={selectedAssignment}
+          persona={selectedAssignment.persona}
+        />
+      )}
     </Box>
     </div>
   );
 }
-
-
-
-/*"use client";
-
-import { Box, Button } from "@mui/material";
-import Header from "@/components/Header";
-import "@/app/globals.css";
-import PersonaForm from "@/components/Modals/PersonaForm";
-import AssignmentForm from "@/components/Modals/AssignmentForm";
-
-
-export default function Admin() {
-    return(
-        <>
-            <Header userName="username"/>
-            <Box className="content-wrapper">
-                <AssignmentForm/>
-                <PersonaForm/>
-            </Box>
-        </>
-        
-    )
-}
-*/
