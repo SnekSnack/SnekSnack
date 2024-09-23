@@ -43,7 +43,7 @@ class Assignment(models.Model):
     due_date = models.DateField(default= datetime.datetime.now())
     time_limit = models.IntegerField(null=True)
     question_limit = models.IntegerField(null=True)
-    # prompt = models.ForeignKey(ChatBot)
+    persona = models.ForeignKey(Personas, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

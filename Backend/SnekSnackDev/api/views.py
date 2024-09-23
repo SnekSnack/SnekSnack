@@ -58,7 +58,8 @@ class AssignmentCreate(generics.ListCreateAPIView):
         queryset = self.get_queryset()
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data)
-    
+
+        
     # override the functions to get custom functionality
     def perform_create(self, serializer):
         # checks if all the data is valid
@@ -67,6 +68,12 @@ class AssignmentCreate(generics.ListCreateAPIView):
         else:
             print(serializer.errors)
     
+
+class StudentAssignment(generics.ListAPIView):
+    serializer_class = AssignmentSerializer
+    def get_queryset(self):
+        return Assignment.objects.filter(release_date__lt = datetime.datetime.now())
+
 class AssignmentDelete(generics.DestroyAPIView):
     serializer_class = AssignmentSerializer
     permission_classes = [StaffOnly]
