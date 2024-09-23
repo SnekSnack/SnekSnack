@@ -43,22 +43,15 @@ class BotDelete(generics.DestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOnly]
 
-    def get_queryset(self):
-        user = self.request.user
-        return Personas.objects.all()
-
 class AssignmentCreate(generics.ListCreateAPIView):
     serializer_class = AssignmentSerializer
     # need to login
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOnly]
 
-    # list for students
-    def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = self.get_queryset()
-        serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data)
-
+    def get_queryset(self):
+        return Assignment.objects.all()
+    
         
     # override the functions to get custom functionality
     def perform_create(self, serializer):
@@ -67,34 +60,27 @@ class AssignmentCreate(generics.ListCreateAPIView):
             serializer.save(author = self.request.user)
         else:
             print(serializer.errors)
-    
-
-class StudentAssignment(generics.ListAPIView):
-    serializer_class = AssignmentSerializer
-    def get_queryset(self):
-        return Assignment.objects.filter(release_date__lt = datetime.datetime.now())
 
 class AssignmentDelete(generics.DestroyAPIView):
     serializer_class = AssignmentSerializer
+    queryset = Assignment.objects.all()
+    # need to login
+    authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOnly]
 
 
-# class LoginView(APIView):
-#     permission_classes = [AllowAny]
+class AssignmentEdit(generics.UpdateAPIView):
+    queryset = Assignment.objects.all()
+    serializer_class = AssignmentSerializer
+    # need to login
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOnly]
 
-#     def post(self, request, format=None):
-#         data = self.request.data
 
-#         username = data['username']
-#         password = data['password']
+class StudentAssignment(generics.ListAPIView):
+    serializer_class = AssignmentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
-#         try:
-#             user = auth.authenticate(username=username, password=password)
-
-#             if user is not None:
-#                 auth.login(request, user)
-#                 return Response({ 'success': 'User authenticated' })
-#             else:
-#                 return Response({ 'error': 'Error Authenticating' })
-#         except:
-#             return Response({ 'error': 'Something went wrong when logging in' })
+    def get_queryset(self):
+        return Assignment.objects.filter(release_date__lt = datetime.datetime.now())

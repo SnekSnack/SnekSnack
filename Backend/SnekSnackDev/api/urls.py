@@ -4,7 +4,10 @@ from api.views import *
 urlpatterns = [
     path("bots/", BotCreate.as_view(), name = ""),
     path("bots/delete/<int:pk>", BotDelete.as_view(), name = "delete-note"),
-    path("student/", StudentAssignment.as_view(), name = "assignmnet- student"),
+    path("student/", StudentAssignment.as_view(), name = "assignmnet-student"),
+    path("assignment/", AssignmentCreate.as_view(), name = "assignmnet"),
+    path("assignment/delete/<int:pk>/", AssignmentDelete.as_view(), name = "assignmnet"),
+    path("assignment/edit/<int:pk>/", AssignmentEdit.as_view(), name = "assignmnet"),
     # path("user/", userCreate.as_view(), name = ""),
 
 ]

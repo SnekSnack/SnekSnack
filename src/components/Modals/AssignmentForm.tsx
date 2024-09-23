@@ -6,6 +6,7 @@ import { DateField } from '@mui/x-date-pickers';
 import { Button, Modal, Box, TextField, Typography, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import "../../app/globals.css";
 import { SelectChangeEvent } from '@mui/material';
+import api from "@/api.js";
 
 interface AssignmentFormProps {
   open: boolean;
@@ -14,7 +15,9 @@ interface AssignmentFormProps {
   assignment?: any; // For editing an assignment
 }
 
+
 export default function AssignmentForm({ open, onClose, onSubmit, assignment }: AssignmentFormProps) {
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -23,6 +26,26 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
     question_limit: '',
     persona: '',
   });
+
+  // const createAss = () => {
+  //   api
+  //     .post("/api/assignment/", { formData })
+  //     .then((res) => {
+  //       if (res.status === 201) alert("Note created!");
+  //       else alert("Failed to make note.");
+  //     })
+  //     .catch((err) => alert(err));
+  // };
+
+  // const editAss = () => {
+  //   api
+  //     .patch(`/api/assignment/edit/${formData.id}`, { formData })
+  //     .then((res) => {
+  //       if (res.status === 201) alert("Note created!");
+  //       else alert("Failed to make note.");
+  //     })
+  //     .catch((err) => alert(err));
+  // };
 
   useEffect(() => {
     if (assignment) {
@@ -69,6 +92,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(formData);
+
   };
 
   return (
@@ -80,6 +104,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
+              id="name"
               label="Name"
               name="name"
               fullWidth
@@ -89,6 +114,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
             />
 
             <TextField
+              id="description"
               label="Description"
               name="description"
               multiline
@@ -100,6 +126,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
 
             <Box className="row gap-10">
               <DateField
+                id="release_date"
                 label="Release Date"
                 name="release_date"
                 value={formData.release_date}
@@ -107,6 +134,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
               />
 
               <DateField
+                id="due_date"
                 label="Due Date"
                 name="due_date"
                 value={formData.due_date}
@@ -115,6 +143,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
             </Box>
 
             <TextField
+              id="question_limit"
               label="Question Limit"
               name="question_limit"
               fullWidth
@@ -127,12 +156,13 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
             <FormControl fullWidth margin="normal">
               <InputLabel id="persona-select-label">Persona</InputLabel>
               <Select
+                id="persona"
                 labelId="persona-select-label"
                 name="persona"
                 value={formData.persona}
                 onChange={handleSelectChange}
               >
-                <MenuItem value="persona1">Persona 1</MenuItem>
+                <MenuItem value="1">Persona 1</MenuItem>
                 <MenuItem value="persona2">Persona 2</MenuItem>
                 <MenuItem value="persona3">Persona 3</MenuItem>
               </Select>
