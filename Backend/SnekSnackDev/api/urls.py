@@ -9,5 +9,4 @@ urlpatterns = [
     path("assignment/delete/<int:pk>/", AssignmentDelete.as_view(), name = "assignmnet"),
     path("assignment/edit/<int:pk>/", AssignmentEdit.as_view(), name = "assignmnet"),
     # path("user/", userCreate.as_view(), name = ""),
-
 ]
