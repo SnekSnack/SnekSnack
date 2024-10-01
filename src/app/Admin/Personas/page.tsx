@@ -80,9 +80,7 @@ export default function AdminPage() {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell>Occupation</TableCell>
-              <TableCell>Condition</TableCell>
-              <TableCell>Personality</TableCell>
+              <TableCell>Prompt</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -90,9 +88,7 @@ export default function AdminPage() {
             {personas.map((persona) => (
               <TableRow key={persona.id}>
                 <TableCell>{persona.name}</TableCell>
-                <TableCell>{persona.occupation}</TableCell>
-                <TableCell>{persona.condition.name}</TableCell>
-                <TableCell>{persona.personality_traits.overall}</TableCell>
+                <TableCell>{persona.prompt}</TableCell>
                 <TableCell>
                   <IconButton onClick={() => handleChat(persona)}>
                     <ChatIcon />
