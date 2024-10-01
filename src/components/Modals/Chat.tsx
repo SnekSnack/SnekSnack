@@ -16,53 +16,36 @@ interface ChatProps {
   open: boolean;
   onClose: (event: any, reason: string) => void;
   onSubmit: (assignment: any) => void;
+  chatId? : any;
   assignment?: any; // For editing an assignment
   persona?: any;
 }
 
-export default function Chat({ open, onClose, onSubmit, assignment, persona }: ChatProps) {
+export default function Chat({ open, onClose, onSubmit, chatId, assignment, persona }: ChatProps) {
   const [chatData, setChatData] = useState({
+    id: null,
+    assignmentId: null,
     name: '',
     question_limit: 10,
   });
   const [personaData, setPersonaData] = useState({
+    id: null,
     name: '',
-    age: '',
-    gender: '',
-    occupation: '',
-    tone: '',
-    condition: {
-      name: '',
-      description: '',
-      duration: ''
-    },
-    personality_traits: {
-      overall: '',
-      introverted_extroverted: '',
-      optimistic_pessimistic: '',
-      decision_making_style: '',
-      communication_style: ''
-    },
-    background_history: {
-      early_life: '',
-      key_life_events: '',
-      current_life_situation: ''
-    },
-    relationships_social_context: {
-      family: '',
-      friends: '',
-      work_school_environment: ''
-    }
+    prompt: '',
   });
 
   useEffect(() => {
     if (assignment) {
       setChatData({
+        id: chatId,
+        assignmentId: assignment.id,
         name: assignment.name,
         question_limit: assignment.question_limit,
       });
     } else {
       setChatData({
+        id: null,
+        assignmentId: null,
         name: 'Test Chat',
         question_limit: 100,
       });
@@ -70,33 +53,9 @@ export default function Chat({ open, onClose, onSubmit, assignment, persona }: C
   
     if (persona) {
       setPersonaData({
+        id: persona.id || null,
         name: persona.name || '',
-        age: persona.age || '',
-        gender: persona.gender || '',
-        occupation: persona.occupation || '',
-        tone: persona.tone || '',
-        condition: {
-          name: persona.condition?.name || '',
-          description: persona.condition?.description || '',
-          duration: persona.condition?.duration || ''
-        },
-        personality_traits: {
-          overall: persona.personality_traits?.overall || '',
-          introverted_extroverted: persona.personality_traits?.introverted_extroverted || '',
-          optimistic_pessimistic: persona.personality_traits?.optimistic_pessimistic || '',
-          decision_making_style: persona.personality_traits?.decision_making_style || '',
-          communication_style: persona.personality_traits?.communication_style || ''
-        },
-        background_history: {
-          early_life: persona.background_history?.early_life || '',
-          key_life_events: persona.background_history?.key_life_events || '',
-          current_life_situation: persona.background_history?.current_life_situation || ''
-        },
-        relationships_social_context: {
-          family: persona.relationships_social_context?.family || '',
-          friends: persona.relationships_social_context?.friends || '',
-          work_school_environment: persona.relationships_social_context?.work_school_environment || ''
-        }
+        prompt: persona.prompt || '',
       });
     } else if (assignment) {
       // If no persona but assignment exists, set personaData.name to assignment.name

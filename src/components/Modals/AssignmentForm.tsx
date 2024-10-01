@@ -19,6 +19,7 @@ interface AssignmentFormProps {
 export default function AssignmentForm({ open, onClose, onSubmit, assignment }: AssignmentFormProps) {
 
   const [formData, setFormData] = useState({
+    id: null,
     name: '',
     description: '',
     release_date: dayjs(),
@@ -26,26 +27,6 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
     question_limit: 10,
     persona: '',
   });
-
-  // const createAss = () => {
-  //   api
-  //     .post("/api/assignment/", { formData })
-  //     .then((res) => {
-  //       if (res.status === 201) alert("Note created!");
-  //       else alert("Failed to make note.");
-  //     })
-  //     .catch((err) => alert(err));
-  // };
-
-  // const editAss = () => {
-  //   api
-  //     .patch(`/api/assignment/edit/${formData.id}`, { formData })
-  //     .then((res) => {
-  //       if (res.status === 201) alert("Note created!");
-  //       else alert("Failed to make note.");
-  //     })
-  //     .catch((err) => alert(err));
-  // };
 
   useEffect(() => {
     if (assignment) {
@@ -56,6 +37,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
       });
     } else {
       setFormData({
+        id: null,
         name: '',
         description: '',
         release_date: dayjs(),

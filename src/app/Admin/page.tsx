@@ -26,7 +26,6 @@ export default function AdminPage() {
 
   const doNothing = () => { }
 
-
   useEffect(() => {
     getAss();
   }, []);
