@@ -27,11 +27,10 @@ export default function AdminPage() {
   const doNothing = () => { }
 
   useEffect(() => {
-    getAss();
+    getAssignments();
   }, []);
 
-  // function to get item
-  const getAss = () => {
+  const getAssignments = () => {
     console.log("TEST");
     api.get("/api/assignment/")
       .then((res) => res.data)
@@ -44,13 +43,13 @@ export default function AdminPage() {
       });
   };
 
-  const deleteAss = (id: number) => {
+  const deleteAssignment = (id: number) => {
     api
       .delete(`/api/assignment/delete/${id}/`)
       .then((res) => {
         if (res.status === 204) alert("Assignment deleted!");
         else alert("Failed to delete Assignment.");
-        getAss();
+        getAssignments();
       })
       .catch((error) => alert(error));
   };
@@ -62,7 +61,12 @@ export default function AdminPage() {
   };
 
   const handleFormSubmit = (newAssignment: any) => {
-    if (selectedAssignment) {
+
+    // add/update assignment here
+
+    handleFormClose();
+
+    /*if (selectedAssignment) { // redundant since useeffect updates assignments
       // Update existing assignment
       setAssignments((prev) =>
         prev.map((assignment) => (assignment.id === newAssignment.id ? newAssignment : assignment))
@@ -70,8 +74,7 @@ export default function AdminPage() {
     } else {
       // Add new assignment
       setAssignments((prev) => [...prev, { ...newAssignment, id: prev.length + 1 }]);
-    }
-    handleFormClose();
+    }*/
   };
 
   const handleChat = (assignment: any) => {
@@ -84,9 +87,12 @@ export default function AdminPage() {
     handleFormOpen();
   };
 
-  const handleDelete = (id: number) => {
-    setAssignments((prev) => prev.filter((assignment) => assignment.id !== id));
-    deleteAss(id);
+  const handleDelete = (assignment: any) => {
+    // can we add a confirm delete
+    deleteAssignment(assignment.id);
+
+    // redundant since useeffect updates assignments
+    //setAssignments((prev) => prev.filter((assignment) => assignment.id !== id));
   };
 
   return (

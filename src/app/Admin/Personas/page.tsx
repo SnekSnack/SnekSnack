@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import api from "@/api.js";
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
@@ -24,6 +25,34 @@ export default function AdminPage() {
 
   const doNothing = () => {}
 
+  useEffect(() => {
+    getPersonas();
+  }, []);
+
+  const getPersonas = () => {
+    console.log("TEST");
+    api.get("/api/persona/") // is this right?
+      .then((res) => res.data)
+      .then((data) => {
+        setPersonas(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const deletePersona = (id: number) => {
+    api
+      .delete(`/api/persona/delete/${id}/`)
+      .then((res) => {
+        if (res.status === 204) alert("Assignment deleted!");
+        else alert("Failed to delete Assignment.");
+        getPersonas();
+      })
+      .catch((error) => alert(error));
+  };
+
   // Open the modal to create or edit a persona
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
@@ -33,15 +62,9 @@ export default function AdminPage() {
 
   // Handle form submit (add or edit persona)
   const handleFormSubmit = (newPersona: any) => {
-    if (selectedPersona) {
-      // Update existing persona
-      setPersonas((prev) =>
-        prev.map((persona) => (persona.id === newPersona.id ? newPersona : persona))
-      );
-    } else {
-      // Add new persona
-      setPersonas((prev) => [...prev, { ...newPersona, id: prev.length + 1 }]);
-    }
+
+    // add update logic here
+
     handleFormClose();
   };
 
@@ -57,8 +80,9 @@ export default function AdminPage() {
   };
 
   // Delete persona handler
-  const handleDelete = (id: number) => {
-    setPersonas((prev) => prev.filter((persona) => persona.id !== id));
+  const handleDelete = (persona: any) => {
+
+    deletePersona(persona.id);
   };
 
   return (
