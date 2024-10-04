@@ -35,12 +35,10 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
   }, []);
 
   const getPersonas = () => {
-    console.log("TEST");
     api.get("/api/bots/")
       .then((res) => res.data)
       .then((data) => {
         setPersonas(data);
-        console.log(data);
       })
       .catch((err) => {
         console.error(err);
@@ -54,6 +52,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
         ...assignment,
         release_date: dayjs(assignment.release_date),
         due_date: dayjs(assignment.due_date),
+
       });
     } else {
       setFormData({

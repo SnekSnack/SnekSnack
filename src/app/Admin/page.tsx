@@ -31,7 +31,6 @@ export default function AdminPage() {
   }, []);
 
   const getAssignments = () => {
-    console.log("TEST");
     api.get("/api/assignment/")
       .then((res) => res.data)
       .then((data) => {
@@ -65,7 +64,26 @@ export default function AdminPage() {
     };
     api.post(`/api/assignment/`, data)
       .then((res) => {
-        console.log();
+        getAssignments();
+      })
+      .catch((err) => alert(err));
+  }
+
+  const editAssignment = (newAssignment: any) => {
+    // format the data to make sure its the correct type
+    const data = {
+      name: newAssignment.name,
+      description: newAssignment.description,
+      release_date: newAssignment.release_date.format('YYYY-MM-DD'),
+      due_date: newAssignment.due_date.format('YYYY-MM-DD'),
+      question_limit: newAssignment.question_limit,
+      persona: parseInt(newAssignment.persona)
+    };
+
+    console.log(newAssignment.id);
+    //.put changes all the variables
+    api.put(`/api/assignment/edit/${newAssignment.id}/`, data)
+      .then((res) => {
         getAssignments();
       })
       .catch((err) => alert(err));
@@ -82,16 +100,13 @@ export default function AdminPage() {
     // add/update assignment here
 
     handleFormClose();
-    createAssignment(newAssignment);
-    /*if (selectedAssignment) { // redundant since useeffect updates assignments
-      // Update existing assignment
-      setAssignments((prev) =>
-        prev.map((assignment) => (assignment.id === newAssignment.id ? newAssignment : assignment))
-      );
-    } else {
-      // Add new assignment
-      setAssignments((prev) => [...prev, { ...newAssignment, id: prev.length + 1 }]);
-    }*/
+    // check ig edit or create
+    if (newAssignment.id == null) {
+      // createAssignment(newAssignment);
+    }
+    else {
+      editAssignment(newAssignment);
+    }
   };
 
   const handleChat = (assignment: any) => {
@@ -100,6 +115,7 @@ export default function AdminPage() {
   };
 
   const handleEdit = (assignment: any) => {
+    console.log(assignment);
     setSelectedAssignment(assignment);
     handleFormOpen();
   };
@@ -141,7 +157,7 @@ export default function AdminPage() {
             </TableHead>
             <TableBody>
               {assignments.map((assignment) => (
-                <TableRow key={assignment.id}>
+                < TableRow key={assignment.id} >
                   <TableCell>{assignment.name}</TableCell>
                   <TableCell>{assignment.description}</TableCell>
                   <TableCell>{assignment.release_date}</TableCell>
@@ -181,6 +197,6 @@ export default function AdminPage() {
           />
         )}
       </Box>
-    </ProtectedRoute>
+    </ProtectedRoute >
   );
 }

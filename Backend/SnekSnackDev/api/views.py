@@ -53,7 +53,6 @@ class AssignmentCreate(generics.ListCreateAPIView):
     permission_classes = [StaffOnly]
 
     def get_queryset(self):
-        print("sdd")
         return Assignment.objects.all()
     
     def create(self, request, *args, **kwargs):
