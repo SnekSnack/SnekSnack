@@ -28,5 +28,5 @@ class BotSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
-        fields = "__all__"
+        fields = ["name", "description", "release_date", "due_date","question_limit","persona"]
 

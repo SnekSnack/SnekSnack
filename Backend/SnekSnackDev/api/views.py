@@ -16,6 +16,9 @@ class CreateUserView(generics.CreateAPIView):
     # temporary to let anyone use this view
     
 
+
+
+
 class BotCreate(generics.ListCreateAPIView):
     serializer_class = BotSerializer
     # need to login
@@ -50,14 +53,24 @@ class AssignmentCreate(generics.ListCreateAPIView):
     permission_classes = [StaffOnly]
 
     def get_queryset(self):
+        print("sdd")
         return Assignment.objects.all()
     
-        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print(serializer.errors)  # Log validation errors
+            return Response(serializer.errors)
+        self.perform_create(serializer)
+        return Response(serializer.data)
+
     # override the functions to get custom functionality
     def perform_create(self, serializer):
         # checks if all the data is valid
+        print("SDDDDDDDDDDDD")
+        print(serializer)
         if serializer.is_valid():
-            serializer.save(author = self.request.user)
+            serializer.save()
         else:
             print(serializer.errors)
 

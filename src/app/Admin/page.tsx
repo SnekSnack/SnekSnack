@@ -54,6 +54,24 @@ export default function AdminPage() {
       .catch((error) => alert(error));
   };
 
+  const createAssignment = (newAssignment: any) => {
+    const data = {
+      name: 'Assignment Name',           // Actual name of the assignment
+      description: 'Assignment Description',  // Actual description
+      release_date: '2024-09-12',  // Valid ISO format date
+      due_date: '2024-10-03T06:01:52.331Z',      // Valid ISO format date
+      question_limit: 10,                 // Number of questions
+      persona: 1  // This should be the ID of the persona, not the name or description
+    };
+    console.log(newAssignment.description);
+    // api.post(`/api/assignment/`, data)
+    //   .then((res) => {
+    //     console.log();
+    //     getAssignments();
+    //   })
+    //   .catch((err) => alert(err));
+  }
+
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
     setIsFormOpen(false);
@@ -65,7 +83,7 @@ export default function AdminPage() {
     // add/update assignment here
 
     handleFormClose();
-
+    createAssignment(newAssignment);
     /*if (selectedAssignment) { // redundant since useeffect updates assignments
       // Update existing assignment
       setAssignments((prev) =>
@@ -96,7 +114,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div>
+    <ProtectedRoute>
       <Header userName="username" />
       <Box className="content-wrapper">
         <Box className="row gap-4">
@@ -164,6 +182,6 @@ export default function AdminPage() {
           />
         )}
       </Box>
-    </div>
+    </ProtectedRoute>
   );
 }

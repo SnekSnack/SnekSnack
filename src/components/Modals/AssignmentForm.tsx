@@ -6,7 +6,6 @@ import { DateField } from '@mui/x-date-pickers';
 import { Button, Modal, Box, TextField, Typography, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import "../../app/globals.css";
 import { SelectChangeEvent } from '@mui/material';
-import api from "@/api.js";
 
 interface AssignmentFormProps {
   open: boolean;
