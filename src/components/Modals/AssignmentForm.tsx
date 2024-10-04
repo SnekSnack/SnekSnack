@@ -147,9 +147,9 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
                 value={formData.persona}
                 onChange={handleSelectChange}
               >
-                <MenuItem value="1">Persona 1</MenuItem>
+                {/* <MenuItem value="1">Persona 1</MenuItem>
                 <MenuItem value="persona2">Persona 2</MenuItem>
-                <MenuItem value="persona3">Persona 3</MenuItem>
+                <MenuItem value="persona3">Persona 3</MenuItem> */}
               </Select>
             </FormControl>
 
