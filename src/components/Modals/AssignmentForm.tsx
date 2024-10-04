@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
+import api from "@/api.js";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers';
@@ -17,6 +18,8 @@ interface AssignmentFormProps {
 
 export default function AssignmentForm({ open, onClose, onSubmit, assignment }: AssignmentFormProps) {
 
+  const [personas, setPersonas] = useState<any[]>([]); // Open/Close modal
+
   const [formData, setFormData] = useState({
     id: null,
     name: '',
@@ -26,6 +29,24 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
     question_limit: 10,
     persona: '',
   });
+
+  useEffect(() => {
+    getPersonas();
+  }, []);
+
+  const getPersonas = () => {
+    console.log("TEST");
+    api.get("/api/bots/")
+      .then((res) => res.data)
+      .then((data) => {
+        setPersonas(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
 
   useEffect(() => {
     if (assignment) {
@@ -147,9 +168,9 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
                 value={formData.persona}
                 onChange={handleSelectChange}
               >
-                {/* <MenuItem value="1">Persona 1</MenuItem>
-                <MenuItem value="persona2">Persona 2</MenuItem>
-                <MenuItem value="persona3">Persona 3</MenuItem> */}
+                {personas.map((persona) => (
+                  <MenuItem value={persona.id}>{persona.name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
 
