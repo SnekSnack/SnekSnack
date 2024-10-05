@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import Chat from "@/components/Modals/Chat";
 
 import '@/app/globals.css'
+import ProtectedRoute from "@/components/ProtectedRoute";
+import api from "@/api.js";
 
 export default function Home() {
 
@@ -16,8 +18,8 @@ export default function Home() {
   });
 
   const [assignmentCompleted, setAssignmentCompleted] = useState(false);
-  const [selectedAssignment, setSelectedAssignment] = useState<any | null>(null); 
-  const [selectedPersona, setSelectedPersona] = useState<any | null>(null); 
+  const [selectedAssignment, setSelectedAssignment] = useState<any | null>(null);
+  const [selectedPersona, setSelectedPersona] = useState<any | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
 
   const handleChatOpen = () => setIsChatOpen(true);
@@ -32,13 +34,26 @@ export default function Home() {
     // set student to have done assignment on db --  store chat messages
     setAssignmentCompleted(true);
   }
-  const handleChat = (assignment: any) => {
-    setSelectedAssignment(assignment);
+  const handleChat = () => {
+    getAssignments();
     handleChatOpen();
   };
 
+
+  const getAssignments = () => {
+    api.get("/api/students/")
+      .then((res) => res.data)
+      .then((data) => {
+        setSelectedAssignment(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
-    <>
+    <ProtectedRoute>
       <Header userName="username" />
 
       <Box className="content-wrapper">
@@ -55,6 +70,6 @@ export default function Home() {
           persona={selectedPersona}
         />
       )}
-    </>
+    </ProtectedRoute>
   );
 }

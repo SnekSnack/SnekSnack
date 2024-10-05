@@ -4,7 +4,8 @@ import React from 'react'
 import Link from 'next/link';
 import { Box, Button } from '@mui/material'
 import "@/app/globals.css"
-
+import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
+import { Navigate } from 'react-router-dom';
 interface HeaderProps {
   userName: string;
 }
@@ -15,7 +16,9 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
 
   const handleLogOut = () => {
     // handle log out and aunthentication
-    window.location.href = '/Login';
+    localStorage.removeItem(REFRESH_TOKEN);
+    localStorage.removeItem(ACCESS_TOKEN);
+    <Navigate to="/Login" />;
   };
 
   return (

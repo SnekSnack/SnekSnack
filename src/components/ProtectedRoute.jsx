@@ -33,11 +33,11 @@ function ProtectedRoute({ children }) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 setIsAuthorized(true);
             } else {
-                setIsAuthorized(false);
+                router.push("/Login");
             }
         } catch (error) {
             console.log(error);
-            setIsAuthorized(false);
+            router.push("/Login");
         }
     };
 
@@ -49,7 +49,7 @@ function ProtectedRoute({ children }) {
 
         // if token doesnt exist redirect to login
         if (!token) {
-            setIsAuthorized(false);
+            router.push("/Login");
             return;
         }
 
@@ -70,10 +70,9 @@ function ProtectedRoute({ children }) {
     if (isAuthorized === null) {
         return <div>Loading...</div>;
     }
-
+    console.log(isAuthorized);
     if (!isAuthorized) {
         router.push("/Login");
-        //<Navigate to="/Login" />;
         return null; // While redirecting, return nothing to avoid rendering protected content
     }
     return children; // Render the protected content if authorized

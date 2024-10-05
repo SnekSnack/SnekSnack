@@ -102,7 +102,7 @@ export default function AdminPage() {
     handleFormClose();
     // check ig edit or create
     if (newAssignment.id == null) {
-      // createAssignment(newAssignment);
+      createAssignment(newAssignment);
     }
     else {
       editAssignment(newAssignment);

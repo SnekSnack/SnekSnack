@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework import generics
 from .serializers import *
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from .models import *
 from rest_framework.response import Response
 from .perms import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.utils import timezone
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -95,4 +96,6 @@ class StudentAssignment(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Assignment.objects.filter(release_date__lt = datetime.datetime.now())
+        current_date = timezone.now().date()
+        print(Assignment.objects.filter(release_date__gt=current_date,due_date__gt=current_date))
+        return Assignment.objects.filter(release_date__gt=current_date,due_date__gt=current_date).first()
