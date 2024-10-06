@@ -12,8 +12,6 @@ api.interceptors.request.use(
     (config) => {
         // Retrieve the access token from localStorage
         const token = localStorage.getItem(ACCESS_TOKEN);
-        console.log("ACCESS_TOKEN", localStorage.getItem(ACCESS_TOKEN));
-        console.log("REFRESH_TOKEN", localStorage.getItem(REFRESH_TOKEN));
         if (token) {
             config.headers.Authorization = `Bearer ${token} `;
         }

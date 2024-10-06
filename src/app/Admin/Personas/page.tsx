@@ -32,7 +32,7 @@ export default function AdminPage() {
 
   const getPersonas = () => {
     console.log("TEST");
-    api.get("/api/persona/") // is this right?
+    api.get("/api/bots/") // is this right?
       .then((res) => res.data)
       .then((data) => {
         setPersonas(data);
@@ -45,7 +45,7 @@ export default function AdminPage() {
 
   const deletePersona = (id: number) => {
     api
-      .delete(`/api/persona/delete/${id}/`)
+      .delete(`/api/bots/delete/${id}/`)
       .then((res) => {
         if (res.status === 204) alert("Assignment deleted!");
         else alert("Failed to delete Assignment.");

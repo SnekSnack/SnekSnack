@@ -80,7 +80,6 @@ export default function AdminPage() {
       persona: parseInt(newAssignment.persona)
     };
 
-    console.log(newAssignment.id);
     //.put changes all the variables
     api.put(`/api/assignment/edit/${newAssignment.id}/`, data)
       .then((res) => {

@@ -9,8 +9,6 @@ import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"; // Replace with actu
 
 function ProtectedRoute({ children }) {
     const router = useRouter();
-
-    console.log("TESTING");
     const [isAuthorized, setIsAuthorized] = useState(null);
 
     // once root is opened check token
@@ -27,7 +25,6 @@ function ProtectedRoute({ children }) {
             const res = await api.post("/api/token/refresh/", {
                 refresh: refreshToken,
             });
-            console.log(res.status)
             // if successful set token 
             if (res.status === 200) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
@@ -36,7 +33,7 @@ function ProtectedRoute({ children }) {
                 router.push("/Login");
             }
         } catch (error) {
-            console.log(error);
+
             router.push("/Login");
         }
     };
@@ -70,7 +67,6 @@ function ProtectedRoute({ children }) {
     if (isAuthorized === null) {
         return <div>Loading...</div>;
     }
-    console.log(isAuthorized);
     if (!isAuthorized) {
         router.push("/Login");
         return null; // While redirecting, return nothing to avoid rendering protected content

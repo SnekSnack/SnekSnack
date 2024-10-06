@@ -47,3 +47,7 @@ class Assignment(models.Model):
     def __str__(self):
         return self.title
     
+class Message(models.Model):
+    sent_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=1000)
+    assignment = models.ForeignKey(Assignment,on_delete=models.CASCADE)

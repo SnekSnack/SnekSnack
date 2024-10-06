@@ -14,10 +14,6 @@ class CreateUserView(generics.CreateAPIView):
     # what kind of data we accept
     serializer_class = UserSerializer
 
-    # temporary to let anyone use this view
-    
-
-
 
 
 class BotCreate(generics.ListCreateAPIView):
@@ -28,7 +24,7 @@ class BotCreate(generics.ListCreateAPIView):
 
     # to get access to self
     def get_queryset(self):
-        user = self.request.user
+        
         auth_header = self.request.META.get('HTTP_AUTHORIZATION')
         # only get the notes current user created
         return Personas.objects.all()
@@ -67,9 +63,14 @@ class AssignmentCreate(generics.ListCreateAPIView):
     # override the functions to get custom functionality
     def perform_create(self, serializer):
         # checks if all the data is valid
-        print("SDDDDDDDDDDDD")
-        print(serializer)
+
         if serializer.is_valid():
+            # delete conflicting assignments
+            checkAss = Assignment.objects.filter(
+                release_date__lte=serializer.due_date,
+                due_date__gte=serializer.release_date
+                )
+            checkAss.delete()
             serializer.save()
         else:
             print(serializer.errors)
@@ -97,5 +98,35 @@ class StudentAssignment(generics.ListAPIView):
 
     def get_queryset(self):
         current_date = timezone.now().date()
-        print(Assignment.objects.filter(release_date__gt=current_date,due_date__gt=current_date))
-        return Assignment.objects.filter(release_date__gt=current_date,due_date__gt=current_date).first()
+        current_ass = Assignment.objects.filter(release_date__lte=current_date,due_date__gte=current_date)
+
+        if(current_ass.exists()):
+            return None
+        else:
+            return current_ass.first()
+
+class StudentMessage(generics.ListAPIView):
+    serializer_class = MessageSerializer
+    authentication_classes = [IsAuthenticated]
+    def get_queryset(self, id):
+        user = self.request.user
+        ass = Assignment.objects.get(id)
+        return Message.objects.filter(sent_by = user,assignment=ass)
+    
+    def perform_create(self,serializer):
+        
+        # check if input is valid
+        if serializer.is_valid():
+
+            # get user in backend so they cant use other people
+            user = self.request.user
+            messages_sent = Message.objects.filter(sent_by = user, assignment= serializer.assignment).count()
+            assignment = Assignment.objects.filter(pk=serializer.assignment)
+
+            # check if assignment exists and if question limit hasnt passed
+            if(assignment.exists() and messages_sent<assignment.first().question_limit):
+                # save the message
+                serializer.sent_by = user
+                serializer.save()
+
+                # THIS IS WHERE THE LLM CODE SHOULD GO

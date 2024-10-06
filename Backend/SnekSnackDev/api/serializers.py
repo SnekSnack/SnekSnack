@@ -30,3 +30,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
         model = Assignment
         fields = ["id","name", "description", "release_date", "due_date","question_limit","persona"]
 
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ["id","content", "assignment"]
