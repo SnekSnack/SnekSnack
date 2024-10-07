@@ -6,6 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import "@/app/globals.css"
 import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function getMessageResponse(message:String) {
   const reversedMessage = message.split("").reverse().join("");
@@ -95,11 +96,35 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
 
   //Function to download transcript as PDF
   const handleDownloadTranscript = () => {
-    //generate transcript text
-    const transcript = messages.map(([message]) => message).join('\n\n');
+    
     //create pdf of the transcript
     const doc = new jsPDF();
-    doc.text(transcript, 10, 10);
+
+    const headers = ["Question", "Answer", "Explanation"];
+
+    const data: string[][] = []
+    let question = "";
+
+    messages.forEach(([message, isUser]) => {
+      if(isUser){
+        question = message;
+      } else {
+        const answer = message;
+        data.push([question, answer,""]);
+      }
+    });
+
+    doc.autoTable({
+        head: [headers],
+        body: data,
+        startY: 20,
+        styles: {
+          fontSize: 10,
+          cellPadding: 3,
+        }
+    })
+
+    doc.text("Transcript of the Conversation", 15, 15);
     doc.save('transcript.pdf');
     //close modal
     onSubmit(assignment);

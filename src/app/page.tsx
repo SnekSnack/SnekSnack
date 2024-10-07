@@ -21,7 +21,7 @@ export default function Home() {
     getAssignments();
     //check if there are assignments
     if (selectedAssignment == null) {
-      setAssignmentCompleted(true);
+      setAssignmentCompleted(false);
     }
     else {
       // get the texts for relevant assignment
