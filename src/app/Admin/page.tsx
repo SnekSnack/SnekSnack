@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
+import MessageIcon from '@mui/icons-material/Message';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentForm from '@/components/Modals/AssignmentForm';
 import Chat from '@/components/Modals/Chat';
@@ -166,6 +167,9 @@ export default function AdminPage() {
                   <TableCell>{assignment.question_limit}</TableCell>
                   <TableCell>{assignment.persona}</TableCell>
                   <TableCell>
+                    <IconButton>
+                      <MessageIcon />
+                    </IconButton>
                     <IconButton onClick={() => handleEdit(assignment)}>
                       <EditIcon />
                     </IconButton>
@@ -201,7 +205,7 @@ export default function AdminPage() {
 
       {/*Deakin Logo*/}
       <Image
-        		src="/deakinsmall.png" 
+        src="/deakinsmall.png" 
 				alt="Deakin Logo"
 				width={200}  
 				height={200} 

@@ -100,7 +100,7 @@ export default function Home() {
       )}
 
       <Image
-        		src="/deakinsmall.png" 
+        src="/deakinsmall.png" 
 				alt="Deakin Logo"
 				width={200}  
 				height={200} 
