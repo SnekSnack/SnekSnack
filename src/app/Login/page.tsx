@@ -2,6 +2,7 @@
 import api from "@/api";
 import { useRouter } from 'next/navigation'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
+import Image from 'next/image';
 
 
 import React, { useState } from 'react';
@@ -38,102 +39,123 @@ export default function Login() {
 	}
 
 	return (
-		<Box className="content-wrapper-full justify-center">
-			<Container component="main" maxWidth="xs">
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						padding: 3,
-						boxShadow: 3,
-						borderRadius: 2,
-						backgroundColor: 'white',
-					}}
-				>
-					<Typography component="h1" variant="h5">
-						Login
-					</Typography>
+
+		<div className="content-wrapper-full">
+			{/* Logo */}
+			<Image
+        		src="/deakinuni.png" 
+				alt="Deakin Logo"
+				width={300}  
+				height={300} 
+				style={{
+				position: 'absolute',
+				bottom: '67%',
+				left: '49%',
+				transform: 'translateX(-50%)',
+				marginBottom: 16,
+				zIndex: 1,
+        	}}
+      	/>
+		
+
+			<Box className="content-wrapper-full justify-center">
+				<Container component="main" maxWidth="xs">
 					<Box
-						component="form"
-						sx={{ mt: 1 }}
-						method="POST"
-						onSubmit={handleSubmit}
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							padding: 3,
+							boxShadow: 3,
+							borderRadius: 2,
+							backgroundColor: 'white',
+						}}
 					>
-						<TextField
-							sx={{ backgroundColor: 'white' }}
-							margin="normal"
-							required
-							fullWidth
-							id="username"
-							label="Username"
-							name="username"
-							autoComplete="username"
-							autoFocus
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-						<TextField
-							sx={{ backgroundColor: 'white' }}
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
+						
+						<Typography component="h1" variant="h5">
+							Login
+						</Typography>
+						<Box
+							component="form"
+							sx={{ mt: 1 }}
+							method="POST"
+							onSubmit={handleSubmit}
+						>
+							<TextField
+								sx={{ backgroundColor: 'white' }}
+								margin="normal"
+								required
+								fullWidth
+								id="username"
+								label="Username"
+								name="username"
+								autoComplete="username"
+								autoFocus
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+							/>
+							<TextField
+								sx={{ backgroundColor: 'white' }}
+								margin="normal"
+								required
+								fullWidth
+								name="password"
+								label="Password"
+								type="password"
+								id="password"
+								autoComplete="current-password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							<Button
+								className="button mt-4"
+								type="submit"
+								fullWidth
+								variant="contained"
+								color="primary"
+							>
+								Login
+							</Button>
+						</Box>
+					</Box>
+				</Container>
+
+				{/* Consent Popup Modal */}
+				<Modal
+					open={openConsentModal}
+					onClose={() => setOpenConsentModal(false)}
+				>
+					<Box
+						sx={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+							width: 400,
+							bgcolor: 'background.paper',
+							boxShadow: 24,
+							p: 4,
+							borderRadius: 2,
+						}}
+					>
+						<Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+							AI Consent
+						</Typography>
+						<Typography sx={{ mb: 3 }}>
+							By clicking &quot;Agree&quot;, you consent to the use of Artificial Intelligence in this assignment.
+						</Typography>
 						<Button
-							className="button mt-4"
-							type="submit"
-							fullWidth
 							variant="contained"
 							color="primary"
+							onClick={handleAgree}
+							fullWidth
 						>
-							Login
+							Agree
 						</Button>
 					</Box>
-				</Box>
-			</Container>
+				</Modal>
 
-			{/* Consent Popup Modal */}
-			<Modal
-				open={openConsentModal}
-				onClose={() => setOpenConsentModal(false)}
-			>
-				<Box
-					sx={{
-						position: 'absolute',
-						top: '50%',
-						left: '50%',
-						transform: 'translate(-50%, -50%)',
-						width: 400,
-						bgcolor: 'background.paper',
-						boxShadow: 24,
-						p: 4,
-						borderRadius: 2,
-					}}
-				>
-					<Typography variant="h6" component="h2" sx={{ mb: 2 }}>
-						AI Consent
-					</Typography>
-					<Typography sx={{ mb: 3 }}>
-						By clicking &quot;Agree&quot;, you consent to the use of Artificial Intelligence in this assignment.
-					</Typography>
-					<Button
-						variant="contained"
-						color="primary"
-						onClick={handleAgree}
-						fullWidth
-					>
-						Agree
-					</Button>
-				</Box>
-			</Modal>
-
-		</Box>
+			</Box>
+		</div>
 	)
 }
