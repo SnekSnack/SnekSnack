@@ -66,11 +66,11 @@ class AssignmentCreate(generics.ListCreateAPIView):
 
         if serializer.is_valid():
             # delete conflicting assignments
-            checkAss = Assignment.objects.filter(
-                release_date__lte=serializer.due_date,
-                due_date__gte=serializer.release_date
-                )
-            checkAss.delete()
+            # checkAss = Assignment.objects.filter(
+            #     release_date__lte=serializer.due_date,
+            #     due_date__gte=serializer.release_date
+            #     )
+            # checkAss.delete()
             serializer.save()
         else:
             print(serializer.errors)

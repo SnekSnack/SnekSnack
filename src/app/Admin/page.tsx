@@ -42,9 +42,9 @@ export default function AdminPage() {
       });
   };
 
-  const deleteAssignment = (id: number) => {
+  const deleteAssignment = (pk: number) => {
     api
-      .delete(`/api/assignment/delete/${id}/`)
+      .delete(`/api/assignment/delete/${pk}/`)
       .then((res) => {
         if (res.status === 204) alert("Assignment deleted!");
         else alert("Failed to delete Assignment.");
@@ -121,6 +121,7 @@ export default function AdminPage() {
 
   const handleDelete = (assignment: any) => {
     // can we add a confirm delete
+    console.log(assignment.id);
     deleteAssignment(assignment.id);
 
     // redundant since useeffect updates assignments
@@ -167,7 +168,7 @@ export default function AdminPage() {
                     <IconButton onClick={() => handleEdit(assignment)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(assignment.id)}>
+                    <IconButton onClick={() => handleDelete(assignment)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
