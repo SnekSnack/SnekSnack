@@ -24,9 +24,6 @@ class BotCreate(generics.ListCreateAPIView):
 
     # to get access to self
     def get_queryset(self):
-        
-        auth_header = self.request.META.get('HTTP_AUTHORIZATION')
-        # only get the notes current user created
         return Personas.objects.all()
     
     # override the functions to get custom functionality

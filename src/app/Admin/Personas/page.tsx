@@ -43,6 +43,15 @@ export default function AdminPage() {
       });
   };
 
+  const createPersona = (newPersona: any) => {
+    api.post(`/api/bots/`, newPersona)
+      .then((res) => {
+        getPersonas();
+      })
+      .catch((err) => alert(err));
+
+  }
+
   const deletePersona = (id: number) => {
     api
       .delete(`/api/bots/delete/${id}/`)
@@ -63,7 +72,7 @@ export default function AdminPage() {
 
   // Handle form submit (add or edit persona)
   const handleFormSubmit = (newPersona: any) => {
-
+    createPersona(newPersona);
     // add update logic here
 
     handleFormClose();
