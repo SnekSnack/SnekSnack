@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         # pass through the fields and validate data
         model = User
-        fields = ["id", "username", "password"]
+        fields = ["id", "username", "password", "groups"]
         # so we dont return the password value
         extra_kwargs = {"password": {"write_only":True}}
 

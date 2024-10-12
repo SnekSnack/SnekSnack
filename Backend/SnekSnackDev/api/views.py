@@ -65,12 +65,6 @@ class AssignmentCreate(generics.ListCreateAPIView):
         # checks if all the data is valid
 
         if serializer.is_valid():
-            # delete conflicting assignments
-            # checkAss = Assignment.objects.filter(
-            #     release_date__lte=serializer.due_date,
-            #     due_date__gte=serializer.release_date
-            #     )
-            # checkAss.delete()
             serializer.save()
         else:
             print(serializer.errors)
@@ -89,6 +83,32 @@ class AssignmentEdit(generics.UpdateAPIView):
     # need to login
     authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOnly]
+
+class StudentsFetch(generics.ListAPIView):
+    serializer_class = UserSerializer
+    # need to login
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOnly]
+    def get_queryset(self):
+        return User.objects.all()
+
+class MessageFetch(generics.ListAPIView):
+    serializer_class = MessageSerializer
+    # need to login
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOnly]
+    def get_queryset(self, Assignment, User):
+        return Message.objects.filter(assignment=Assignment, sent_by=User)
+
+
+class HeaderFetch(generics.ListAPIView):
+    serializer_class = UserSerializer
+    # need to login
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOnly]
+
+    def get_queryset(self):
+        return self.request.user
 
 
 class StudentAssignment(generics.ListAPIView):

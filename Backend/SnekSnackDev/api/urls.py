@@ -12,5 +12,10 @@ urlpatterns = [
     path("assignment/", AssignmentCreate.as_view(), name = "assignmnet"),
     path("assignment/delete/<int:pk>/", AssignmentDelete.as_view(), name = "assignmnet"),
     path("assignment/edit/<int:pk>/", AssignmentEdit.as_view(), name = "assignmnet"),
-    # path("user/", userCreate.as_view(), name = ""),
+    
+    path("messages/<int:Assignment>/<int:User>", MessageFetch.as_view(), name = "assignmnet"),
+    path("student/list", StudentsFetch.as_view(), name = "assignmnet"),
+
+    # header
+    path("header/", HeaderFetch.as_view(), name = "assignmnet"),
 ]
