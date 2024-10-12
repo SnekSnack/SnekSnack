@@ -20,6 +20,9 @@ export default function AdminPage() {
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close modal
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
 
+  const [student, setStudent] = useState<any[]>([]); // Open/Close modal
+  const [message, setMessage] = useState<any[]>([]); // Open/Close modal
+
   const handleChatOpen = () => setIsChatOpen(true);
   const handleChatClose = (event: any, reason: string) => {
     setIsChatOpen(false);
@@ -30,6 +33,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     getAssignments();
+    getStudents();
   }, []);
 
   const getAssignments = () => {
@@ -89,6 +93,36 @@ export default function AdminPage() {
       })
       .catch((err) => alert(err));
   }
+
+  // get users
+  const getStudents = () => {
+    api.get(`/api/student/list/`)
+      .then((res) => res.data)
+      .then((data) => {
+        setStudent(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+
+  //get messages of users
+  const getMessages = (ass_id: number, student_id: number) => {
+    api.get(`/api/messages/${ass_id}/${student_id}/`)
+      .then((res) => res.data)
+      .then((data) => {
+        setMessage(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+
+
 
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
@@ -205,19 +239,19 @@ export default function AdminPage() {
 
       {/*Deakin Logo*/}
       <Image
-        src="/deakinsmall.png" 
-				alt="Deakin Logo"
-				width={200}  
-				height={200} 
-				style={{
-				position: 'absolute',
-				bottom: '0%',
-				left: '92%',
-				transform: 'translateX(-50%)',
-				marginBottom: 16,
-				zIndex: 1,
-        	}}
-      	/>
+        src="/deakinsmall.png"
+        alt="Deakin Logo"
+        width={200}
+        height={200}
+        style={{
+          position: 'absolute',
+          bottom: '0%',
+          left: '92%',
+          transform: 'translateX(-50%)',
+          marginBottom: 16,
+          zIndex: 1,
+        }}
+      />
 
     </ProtectedRoute >
   );

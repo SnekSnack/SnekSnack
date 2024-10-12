@@ -16,7 +16,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ userName }) => {
   const router = useRouter();
-  const [username, setUsername] = useState<any>(); // Store all assignments
+  const [username, setUsername] = useState<any[]>([]); // Store all assignments
   // top code broke it whoopsies
   // if group==1 or if it even exists then its an admin
   // yes its hard codey but we dont really have time anymore ._.
@@ -31,7 +31,8 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
 
   useEffect(() => {
     getUsername();
-  })
+    //uncomment when u can fix
+  }, [])
 
   const getUsername = () => {
 
@@ -49,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
 
   return (
     <header className="header">
-      <Box>Hi, {username}</Box>
+      <Box>Hi, {userName}</Box>
       <Button onClick={handleLogOut}>Log Out</Button>
     </header>
   );
