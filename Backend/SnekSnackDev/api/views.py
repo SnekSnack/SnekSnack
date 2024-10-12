@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from .perms import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.utils import timezone
-
+from rest_framework.views import APIView
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
 
@@ -101,13 +101,14 @@ class MessageFetch(generics.ListAPIView):
         return Message.objects.filter(assignment=Assignment, sent_by=User)
 
 
-class HeaderFetch(generics.ListAPIView):
+class HeaderFetch(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     # need to login
     authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOnly]
 
-    def get_queryset(self):
+    def get_object(self):
+        # print(User.objects.get(self.request.user))
         return self.request.user
 
 
@@ -120,7 +121,7 @@ class StudentAssignment(generics.ListAPIView):
         current_date = timezone.now().date()
         current_ass = Assignment.objects.filter(release_date__lte=current_date,due_date__gte=current_date)
 
-        if(current_ass.exists()):
+        if(not current_ass.exists()):
             return None
         else:
             return current_ass.first()
