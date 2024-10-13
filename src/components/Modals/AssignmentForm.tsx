@@ -168,7 +168,9 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
                 onChange={handleSelectChange}
               >
                 {personas.map((persona) => (
-                  <MenuItem value={persona.id}>{persona.name}</MenuItem>
+                  <MenuItem key={persona.id} value={persona.id}>
+                    {persona.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
