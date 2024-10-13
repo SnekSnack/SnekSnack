@@ -40,7 +40,19 @@ export default function Login() {
 
 	const handleAgree = () => {
 		setOpenConsentModal(false);
-		router.push("/")
+		api.get("/api/header/")
+		.then((res) => res.data)
+		.then((data) => {
+			if (data.groups.length>0) {
+				router.push("/Admin") // Admin
+			} else {
+				router.push("/") // Student
+			}
+			console.log(data);
+		})
+		.catch((err) => {
+			console.error(err);
+		});
 	}
 
 	return (

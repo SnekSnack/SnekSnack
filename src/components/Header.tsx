@@ -11,17 +11,11 @@ interface HeaderProps {
   userName: string;
 }
 
-// need to add a handle onclick to actually log them out
-
 const Header: React.FC<HeaderProps> = ({ userName }) => {
   const router = useRouter();
-  const [username, setUsername] = useState<any[]>([]); // Store all assignments
-  // top code broke it whoopsies
-  // if group==1 or if it even exists then its an admin
-  // yes its hard codey but we dont really have time anymore ._.
+  const [username, setUsername] = useState<any[]>([]);
 
   const handleLogOut = () => {
-    // handle log out and aunthentication
     localStorage.removeItem(REFRESH_TOKEN);
     localStorage.removeItem(ACCESS_TOKEN);
     router.push("Login/");
@@ -29,7 +23,6 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
 
   useEffect(() => {
     getUsername();
-    //uncomment when u can fix
   }, [])
 
   const getUsername:any = () => {
