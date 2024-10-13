@@ -1,13 +1,12 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { Box, Button } from '@mui/material'
 import "@/app/globals.css"
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
-import { Navigate } from 'react-router-dom';
 import { useRouter } from 'next/navigation'
 import api from "@/api.js";
+import Image from 'next/image';
 interface HeaderProps {
   userName: string;
 }
@@ -50,7 +49,23 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
   return (
     <header className="header">
       <Box>Hi, {username}</Box>
-      <Button onClick={handleLogOut}>Log Out</Button>
+      <Box className="flex gap-5">
+        <Image
+          src='/deakinsmall.png'
+          alt="Deakin Logo"
+          width={100}  
+          height={75}
+          />
+        <Button onClick={handleLogOut}
+          sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            '&:hover': {
+              backgroundColor: '#414141', 
+            },
+          }}
+        >Log Out</Button>
+      </Box>
     </header>
   );
 };

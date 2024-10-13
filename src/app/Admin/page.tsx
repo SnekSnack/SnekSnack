@@ -172,7 +172,14 @@ export default function AdminPage() {
           <Button className="button" variant="contained" onClick={handleFormOpen}>
             Create a New Assignment
           </Button>
-          <Button className="button bg-white text-black" variant="contained" href="/Admin/Personas">
+          <Button className="button" variant="contained" href="/Admin/Personas"
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '&:hover': {
+                backgroundColor: '#414141', 
+              },
+            }}>
             Manage Personas
           </Button>
         </Box>
@@ -236,22 +243,6 @@ export default function AdminPage() {
           />
         )}
       </Box>
-
-      {/*Deakin Logo*/}
-      <Image
-        src="/deakinsmall.png"
-        alt="Deakin Logo"
-        width={200}
-        height={200}
-        style={{
-          position: 'absolute',
-          bottom: '0%',
-          left: '92%',
-          transform: 'translateX(-50%)',
-          marginBottom: 16,
-          zIndex: 1,
-        }}
-      />
 
     </ProtectedRoute >
   );

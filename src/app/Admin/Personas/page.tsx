@@ -94,7 +94,15 @@ export default function AdminPage() {
           <Button className="button" variant="contained" onClick={handleFormOpen}>
             Create a New Persona
           </Button>
-          <Button className="button bg-white text-black" variant="contained" href="/Admin">
+          <Button className="button bg-white text-black" variant="contained" href="/Admin"
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '&:hover': {
+                backgroundColor: '#414141', 
+              },
+            }}
+          >
             Back to Assignments
           </Button>
         </Box>
