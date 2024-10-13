@@ -29,8 +29,10 @@ export default function Login() {
 				.then((res) => res.data)
 				.then((data) => {
 					if (data.groups.length>0) {
+						console.log("Admin Login")
 						router.push("/Admin") // Admin
 					} else {
+						console.log("Student Login")
 						setOpenConsentModal(true); // Student
 					}
 					console.log(data);

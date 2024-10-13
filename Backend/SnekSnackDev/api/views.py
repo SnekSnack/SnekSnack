@@ -105,7 +105,7 @@ class HeaderFetch(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     # need to login
     authentication_classes = [JWTAuthentication]
-    permission_classes = [StaffOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         # print(User.objects.get(self.request.user))
