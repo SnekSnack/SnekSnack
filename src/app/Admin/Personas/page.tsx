@@ -11,8 +11,10 @@ import Chat from '@/components/Modals/Chat';
 import Header from '@/components/Header';
 import "../../globals.css"
 import ProtectedRoute from "@/components/ProtectedRoute"
+import { useRouter } from 'next/navigation'
 
 export default function AdminPage() {
+  const router = useRouter();
   const [personas, setPersonas] = useState<any[]>([]); // List of personas
   const [selectedPersona, setSelectedPersona] = useState<any | null>(null); // For editing a persona
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close the form modal
@@ -27,6 +29,20 @@ export default function AdminPage() {
   const doNothing = () => { }
 
   useEffect(() => {
+    api.get("/api/header/")
+				.then((res) => res.data)
+				.then((data) => {
+					if (data.groups.length>0) {
+						console.log("Page load success")
+					} else {
+						console.log("Access Forbidden")
+						router.push("/");
+					}
+					console.log(data);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
     getPersonas();
   }, []);
 
@@ -82,7 +98,6 @@ export default function AdminPage() {
 
   // Delete persona handler
   const handleDelete = (persona: any) => {
-
     deletePersona(persona.id);
   };
 
@@ -91,6 +106,17 @@ export default function AdminPage() {
       <Header userName="username" />
       <Box className="content-wrapper">
         <Box className="row gap-4">
+          <Button className="button bg-white text-black" variant="contained" href="/Admin"
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '&:hover': {
+                backgroundColor: '#414141', 
+              },
+            }}
+          >
+            Assignments
+          </Button>
           <Button className="button" variant="contained" onClick={handleFormOpen}>
             Create a New Persona
           </Button>
@@ -103,7 +129,7 @@ export default function AdminPage() {
               },
             }}
           >
-            Back to Assignments
+            Students
           </Button>
         </Box>
 

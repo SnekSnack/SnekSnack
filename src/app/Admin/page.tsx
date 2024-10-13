@@ -8,21 +8,20 @@ import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
 import MessageIcon from '@mui/icons-material/Message';
 import DeleteIcon from '@mui/icons-material/Delete';
+import GroupsIcon from '@mui/icons-material/Groups';
 import AssignmentForm from '@/components/Modals/AssignmentForm';
 import Chat from '@/components/Modals/Chat';
 import Header from '@/components/Header';
 import "../globals.css"
-import Image from 'next/image';
+import { useRouter } from 'next/navigation'
 
 export default function AdminPage() {
+  const router = useRouter();
   const [assignments, setAssignments] = useState<any[]>([]); // Store all assignments
   const [selectedAssignment, setSelectedAssignment] = useState<any | null>(null); // For editing
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close modal
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
-
-  const [student, setStudent] = useState<any[]>([]); // Open/Close modal
-  const [message, setMessage] = useState<any[]>([]); // Open/Close modal
-
+ 
   const handleChatOpen = () => setIsChatOpen(true);
   const handleChatClose = (event: any, reason: string) => {
     setIsChatOpen(false);
@@ -32,8 +31,22 @@ export default function AdminPage() {
   const doNothing = () => { }
 
   useEffect(() => {
+    api.get("/api/header/")
+				.then((res) => res.data)
+				.then((data) => {
+					if (data.groups.length>0) {
+						console.log("Page load success")
+					} else {
+						console.log("Access Forbidden")
+						router.push("/");
+					}
+					console.log(data);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
     getAssignments();
-    getStudents();
+    //getStudents();
   }, []);
 
   const getAssignments = () => {
@@ -94,35 +107,9 @@ export default function AdminPage() {
       .catch((err) => alert(err));
   }
 
-  // get users
-  const getStudents = () => {
-    api.get(`/api/student/list/`)
-      .then((res) => res.data)
-      .then((data) => {
-        setStudent(data);
-        console.log(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const viewSubmissions = (assignmentId:any) => {
+    router.push(`/Submissions/${assignmentId}`);
   }
-
-
-  //get messages of users
-  const getMessages = (ass_id: number, student_id: number) => {
-    api.get(`/api/messages/${ass_id}/${student_id}/`)
-      .then((res) => res.data)
-      .then((data) => {
-        setMessage(data);
-        console.log(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-
-
 
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
@@ -131,17 +118,13 @@ export default function AdminPage() {
   };
 
   const handleFormSubmit = (newAssignment: any) => {
-
-    // add/update assignment here
-
-    handleFormClose();
-    // check ig edit or create
     if (newAssignment.id == null) {
       createAssignment(newAssignment);
     }
     else {
       editAssignment(newAssignment);
     }
+    handleFormClose();
   };
 
   const handleChat = (assignment: any) => {
@@ -180,7 +163,17 @@ export default function AdminPage() {
                 backgroundColor: '#414141', 
               },
             }}>
-            Manage Personas
+            AI Personas
+          </Button>
+          <Button className="button" variant="contained" href="/Admin/Students"
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '&:hover': {
+                backgroundColor: '#414141', 
+              },
+            }}>
+            Students
           </Button>
         </Box>
 
@@ -208,9 +201,12 @@ export default function AdminPage() {
                   <TableCell>{assignment.question_limit}</TableCell>
                   <TableCell>{assignment.persona}</TableCell>
                   <TableCell>
-                    <IconButton>
-                      <MessageIcon />
+                    <IconButton onClick={() => viewSubmissions(assignment.id)}>
+                      <GroupsIcon />
                     </IconButton>
+                    {/*<IconButton>
+                      <MessageIcon />
+                    </IconButton>*/}
                     <IconButton onClick={() => handleEdit(assignment)}>
                       <EditIcon />
                     </IconButton>
