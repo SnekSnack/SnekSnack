@@ -26,7 +26,6 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
     localStorage.removeItem(REFRESH_TOKEN);
     localStorage.removeItem(ACCESS_TOKEN);
     router.push("Login/");
-
   };
 
   useEffect(() => {
@@ -34,12 +33,12 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
     //uncomment when u can fix
   }, [])
 
-  const getUsername = () => {
+  const getUsername:any = () => {
 
     api.get("/api/header/")
       .then((res) => res.data)
       .then((data) => {
-        setUsername(data);
+        setUsername(data.username);
         console.log(data);
       })
       .catch((err) => {
@@ -50,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
 
   return (
     <header className="header">
-      <Box>Hi, {userName}</Box>
+      <Box>Hi, {username}</Box>
       <Button onClick={handleLogOut}>Log Out</Button>
     </header>
   );

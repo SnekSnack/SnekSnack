@@ -13,9 +13,9 @@ import "@/app/globals.css"
 export default function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [errorMsg, setErrorMsg] = useState("");
 
 	const router = useRouter();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [openConsentModal, setOpenConsentModal] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,9 +26,14 @@ export default function Login() {
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 			setOpenConsentModal(true);
+			setErrorMsg("")
 		}
-		catch (error) {
-			alert(error)
+		catch (error:any) {
+			if (error.response && error.response.status === 401) {
+				setErrorMsg("Incorrect username or password");
+			} else {
+				setErrorMsg("An unexpected error occurred. Please try again later.");
+			}
 			console.log(error);
 		}
 	};
@@ -107,6 +112,9 @@ export default function Login() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
+							<Typography sx={{ color: 'red', fontSize: '0.875rem', marginBottom: '4px'}}>
+								{errorMsg}
+							</Typography>
 							<Button
 								className="button mt-4"
 								type="submit"
