@@ -25,7 +25,19 @@ export default function Login() {
 			const res = await api.post("/api/token/", { username, password });
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-			setOpenConsentModal(true);
+			api.get("/api/header/")
+				.then((res) => res.data)
+				.then((data) => {
+					if (data.groups.length>0) {
+						router.push("/Admin") // Admin
+					} else {
+						setOpenConsentModal(true); // Student
+					}
+					console.log(data);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
 			setErrorMsg("")
 		}
 		catch (error:any) {
@@ -40,19 +52,7 @@ export default function Login() {
 
 	const handleAgree = () => {
 		setOpenConsentModal(false);
-		api.get("/api/header/")
-		.then((res) => res.data)
-		.then((data) => {
-			if (data.groups.length>0) {
-				router.push("/Admin") // Admin
-			} else {
-				router.push("/") // Student
-			}
-			console.log(data);
-		})
-		.catch((err) => {
-			console.error(err);
-		});
+		router.push("/");
 	}
 
 	return (
