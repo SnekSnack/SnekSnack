@@ -104,7 +104,7 @@ export default function AdminPage() {
             <TableBody>
               {students.map((student) => (
                 <TableRow key={student.id}>
-                  <TableCell>{student.name}</TableCell>
+                  <TableCell>{student.username}</TableCell>
                   {/*<TableCell>{student.prompt}</TableCell>*/}
                   <TableCell>
                     <IconButton onClick={() => handleChat(student)}>
