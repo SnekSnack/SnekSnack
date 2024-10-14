@@ -54,6 +54,15 @@ body {
   width: 100%;
 }
 
+.row-space-between {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .column {
   padding: 10px;
   display: flex;

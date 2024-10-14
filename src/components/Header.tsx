@@ -8,10 +8,10 @@ import { useRouter } from 'next/navigation'
 import api from "@/api.js";
 import Image from 'next/image';
 interface HeaderProps {
-  userName: string;
+  isProtectedPage: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ userName }) => {
+const Header: React.FC<HeaderProps> = ({ isProtectedPage }) => {
   const router = useRouter();
   const [username, setUsername] = useState<any[]>([]);
 
@@ -22,6 +22,22 @@ const Header: React.FC<HeaderProps> = ({ userName }) => {
   };
 
   useEffect(() => {
+    if (isProtectedPage) {
+      api.get("/api/header/")
+				.then((res) => res.data)
+				.then((data) => {
+					if (data.groups.length>0) {
+						console.log("Page load success")
+					} else {
+						console.log("Access Forbidden")
+						router.push("/");
+					}
+					console.log(data);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+    }
     getUsername();
   }, [])
 

@@ -29,20 +29,6 @@ export default function AdminPage() {
   const doNothing = () => { }
 
   useEffect(() => {
-    api.get("/api/header/")
-				.then((res) => res.data)
-				.then((data) => {
-					if (data.groups.length>0) {
-						console.log("Page load success")
-					} else {
-						console.log("Access Forbidden")
-						router.push("/");
-					}
-					console.log(data);
-				})
-				.catch((err) => {
-					console.error(err);
-				});
     getPersonas();
   }, []);
 
@@ -51,8 +37,9 @@ export default function AdminPage() {
     api.get("/api/bots/") // is this right?
       .then((res) => res.data)
       .then((data) => {
-        setPersonas(data);
-        console.log(data);
+        const sortedData = data.sort((a: any, b: any) => b.id - a.id);
+        setPersonas(sortedData);
+        console.log(sortedData);
       })
       .catch((err) => {
         console.error(err);
@@ -103,33 +90,33 @@ export default function AdminPage() {
 
   return (
     <ProtectedRoute>
-      <Header userName="username" />
+      <Header isProtectedPage={true} />
       <Box className="content-wrapper">
-        <Box className="row gap-4">
-          <Button className="button bg-white text-black" variant="contained" href="/Admin"
-            sx={{
-              backgroundColor: 'white',
-              color: 'black',
-              '&:hover': {
-                backgroundColor: '#414141', 
-              },
-            }}
-          >
-            Assignments
-          </Button>
+        <Box className="row-space-between">
+          <Box className="flex gap-4">
+            <Button className="button" variant="contained" href="/Admin" 
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '&:hover': {
+                  backgroundColor: '#414141', 
+                },
+              }}>
+              Assignments
+            </Button>
+            <Button className="button" variant="contained" href="/Admin/Personas" disabled={true}
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '&:hover': {
+                  backgroundColor: '#414141', 
+                },
+              }}>
+              AI Personas
+            </Button>
+          </Box>
           <Button className="button" variant="contained" onClick={handleFormOpen}>
             Create a New Persona
-          </Button>
-          <Button className="button bg-white text-black" variant="contained" href="/Admin"
-            sx={{
-              backgroundColor: 'white',
-              color: 'black',
-              '&:hover': {
-                backgroundColor: '#414141', 
-              },
-            }}
-          >
-            Students
           </Button>
         </Box>
 

@@ -82,7 +82,7 @@ export default function Home() {
 
   return (
     <ProtectedRoute>
-      <Header userName="username" />
+      <Header isProtectedPage={false} />
 
       <Box className="content-wrapper">
         <Button className="button" disabled={assignmentCompleted} onClick={handleChat} variant="contained" color="primary">Start chat</Button>

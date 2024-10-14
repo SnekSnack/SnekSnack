@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import api from "@/api.js";
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import PastChat from '@/components/Modals/PastChat'
 import Header from '@/components/Header';
@@ -12,28 +12,13 @@ import { useRouter } from 'next/navigation'
 
 export default function AdminPage() {
   const router = useRouter();
-  const [students, setStudents] = useState<any[]>([]); // Open/Close modal
-  const [messages, setMessages] = useState<any[]>([]); // Open/Close modal
+  const { assignmentId } = router.query;
+  const [students, setStudents] = useState<any[]>([]); 
+  //const [messages, setMessages] = useState<any[]>([]); // Open/Close modal
   const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
 
   useEffect(() => {
-    api.get("/api/header/")
-      .then((res) => res.data)
-      .then((data) => {
-        if (data.groups.length>0) {
-          console.log("Page load success")
-        } else {
-          console.log("Access Forbidden")
-          router.push("/");
-        }
-        console.log(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    //start here
     getStudents();
   }, []);
 
@@ -49,7 +34,6 @@ export default function AdminPage() {
       });
   }
 
-  const doNothing = () => { }
   const handleChat = (student: any) => {
     setSelectedStudent(student);
     handleChatOpen();
@@ -61,34 +45,35 @@ export default function AdminPage() {
 
   return (
     <ProtectedRoute>
-      <Header userName="username" />
+      <Header isProtectedPage={true} />
       <Box className="content-wrapper">
-        <Box className="row gap-4">
-        <Button className="button bg-white text-black" variant="contained" href="/Admin"
-            sx={{
-              backgroundColor: 'white',
-              color: 'black',
-              '&:hover': {
-                backgroundColor: '#414141', 
-              },
-            }}
-          >
-            Assignments
-          </Button>
-          <Button className="button bg-white text-black" variant="contained" href="/Admin/Personas"
-            sx={{
-              backgroundColor: 'white',
-              color: 'black',
-              '&:hover': {
-                backgroundColor: '#414141', 
-              },
-            }}
-          >
-            AI Personas
-          </Button>
-          <Button className="button" variant="contained" disabled={true}>
-            Students
-          </Button>
+        
+        <Box className="row-space-between">
+          <Box className="flex gap-4">
+            <Button className="button" variant="contained" href="/Admin"
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '&:hover': {
+                  backgroundColor: '#414141', 
+                },
+              }}>
+              Assignments
+            </Button>
+            <Button className="button" variant="contained" href="/Admin/Personas"
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '&:hover': {
+                  backgroundColor: '#414141', 
+                },
+              }}>
+              AI Personas
+            </Button>
+          </Box>
+          <Typography component="h1" variant="h5">
+            Assignment {assignmentId} Submissions
+          </Typography>
         </Box>
 
         {/* Table for Personas */}
@@ -122,7 +107,7 @@ export default function AdminPage() {
             open={isChatOpen}
             onClose={handleChatClose}
             student={selectedStudent}
-            assignment={null} // get most recent assignment?
+            assignment={assignmentId}
           />
         )}
       </Box>
