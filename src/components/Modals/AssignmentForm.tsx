@@ -168,14 +168,19 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
                 onChange={handleSelectChange}
               >
                 {personas.map((persona) => (
-                  <MenuItem value={persona.id}>{persona.name}</MenuItem>
+                  <MenuItem key={persona.id} value={persona.id}>
+                    {persona.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
-
-            <Button className="button" type="submit" variant="contained" sx={{ mt: 2 }}>
-              {assignment ? 'Update' : 'Save'}
-            </Button>
+            
+            <Box className="row-space-between">
+              <Box/>
+              <Button className="button" type="submit" variant="contained" sx={{ mt: 2 }}>
+                {assignment ? 'Update' : 'Save'}
+              </Button>
+            </Box>
           </form>
         </Box>
       </Modal>
