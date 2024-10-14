@@ -3,7 +3,7 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import api from "@/api.js";
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import { Box, Button, Typography, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
 import MessageIcon from '@mui/icons-material/Message';
@@ -21,12 +21,17 @@ export default function AdminPage() {
   const [selectedAssignment, setSelectedAssignment] = useState<any | null>(null); // For editing
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close modal
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
+  const [openDeleteModal, setOpenDeleteModal] = useState(false); // Open/Close modal
  
   const handleChatOpen = () => setIsChatOpen(true);
   const handleChatClose = (event: any, reason: string) => {
     setIsChatOpen(false);
     setSelectedAssignment(null);
   };
+
+  const viewSubmissions = (assignment: any) => {
+    router.push(`/Admin/${assignment.id}`);
+  }
 
   const doNothing = () => { }
 
@@ -96,10 +101,6 @@ export default function AdminPage() {
       .catch((err) => alert(err));
   }
 
-  const viewSubmissions = (assignment: any) => {
-    router.push(`/Admin/${assignment.id}`);
-  }
-
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
     setIsFormOpen(false);
@@ -128,13 +129,21 @@ export default function AdminPage() {
   };
 
   const handleDelete = (assignment: any) => {
-    // can we add a confirm delete
-    console.log(assignment.id);
-    deleteAssignment(assignment.id);
-
-    // redundant since useeffect updates assignments
-    //setAssignments((prev) => prev.filter((assignment) => assignment.id !== id));
+    console.log(assignment);
+    setSelectedAssignment(assignment);
+    setOpenDeleteModal(true);
   };
+
+  const closeDeleteModal = () => {
+    setOpenDeleteModal(false);
+    setSelectedAssignment(null);
+  }
+
+  const handleConfirmDelete = () => {
+    deleteAssignment(selectedAssignment.id);
+    setOpenDeleteModal(false);
+    setSelectedAssignment(null);
+  }
 
   return (
     <ProtectedRoute>
@@ -173,7 +182,7 @@ export default function AdminPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
+                <TableCell>{'#'}</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Release Date</TableCell>
@@ -231,6 +240,60 @@ export default function AdminPage() {
             persona={selectedAssignment.persona}
           />
         )}
+
+        {/* Delete confirmation */}
+        <Modal
+					open={openDeleteModal}
+					onClose={() => setOpenDeleteModal(false)}
+				>
+					<Box
+						sx={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+							width: 400,
+							bgcolor: 'background.paper',
+							boxShadow: 24,
+							p: 4,
+							borderRadius: 2,
+						}}
+					>
+						<Typography sx={{ mb: 3 }}>
+							{`Are you sure you want to delete this assignment? This action is irreversible.`}
+						</Typography>
+            <Box className="row gap-4">
+            <Button
+							variant="contained"
+							onClick={closeDeleteModal}
+							fullWidth
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '&:hover': {
+                  backgroundColor: '#777777', 
+                },
+              }}
+						>
+							Back
+						</Button>
+						<Button
+							variant="contained"
+							onClick={handleConfirmDelete}
+							fullWidth
+              sx={{
+                backgroundColor: '#ac3232',
+                '&:hover': {
+                  backgroundColor: '#770101', 
+                },
+              }}
+						>
+							Delete
+						</Button>
+            </Box>
+					</Box>
+				</Modal>
+        
       </Box>
 
     </ProtectedRoute >
