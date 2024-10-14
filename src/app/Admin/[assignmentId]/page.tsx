@@ -42,6 +42,7 @@ export default function AdminPage() {
   };
   const handleChatOpen = () => setIsChatOpen(true);
   const handleChatClose = (event: any, reason: string) => {
+    setSelectedStudent(null);
     setIsChatOpen(false);
   };
 
@@ -84,7 +85,7 @@ export default function AdminPage() {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell>View Chat</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -107,7 +108,7 @@ export default function AdminPage() {
             open={isChatOpen}
             onClose={handleChatClose}
             student={selectedStudent}
-            assignment={assignmentId}
+            assignmentId={assignmentId}
           />
         )}
       </Box>

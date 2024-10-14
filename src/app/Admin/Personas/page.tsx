@@ -11,10 +11,8 @@ import Chat from '@/components/Modals/Chat';
 import Header from '@/components/Header';
 import "../../globals.css"
 import ProtectedRoute from "@/components/ProtectedRoute"
-import { useRouter } from 'next/navigation'
 
 export default function AdminPage() {
-  const router = useRouter();
   const [personas, setPersonas] = useState<any[]>([]); // List of personas
   const [selectedPersona, setSelectedPersona] = useState<any | null>(null); // For editing a persona
   const [isFormOpen, setIsFormOpen] = useState(false); // Open/Close the form modal
@@ -40,7 +38,6 @@ export default function AdminPage() {
       .then((data) => {
         const sortedData = data.sort((a: any, b: any) => b.id - a.id);
         setPersonas(sortedData);
-        console.log(sortedData);
       })
       .catch((err) => {
         console.error(err);
@@ -71,13 +68,10 @@ export default function AdminPage() {
   }
 
   const editPersona = (newAssignment: any) => {
-    // format the data to make sure its the correct type
     const data = {
       name: newAssignment.name,
       prompt: newAssignment.prompt,
     };
-
-    //.put changes all the variables
     api.put(`/api/bots/edit/${newAssignment.id}/`, data)
       .then((res) => {
         getPersonas();
@@ -214,7 +208,8 @@ export default function AdminPage() {
             onClose={handleChatClose}
             onSubmit={doNothing}
             //assignment={null}
-            persona={selectedPersona}
+            personaId={selectedPersona.id}
+            test={true}
           />
         )}
 

@@ -46,7 +46,6 @@ export default function AdminPage() {
       .then((data) => {
         const sortedData = data.sort((a: any, b: any) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
         setAssignments(sortedData);
-        console.log(sortedData);
       })
       .catch((err) => {
         console.error(err);
@@ -123,13 +122,11 @@ export default function AdminPage() {
   };
 
   const handleEdit = (assignment: any) => {
-    console.log(assignment);
     setSelectedAssignment(assignment);
     handleFormOpen();
   };
 
   const handleDelete = (assignment: any) => {
-    console.log(assignment);
     setSelectedAssignment(assignment);
     setOpenDeleteModal(true);
   };
@@ -206,9 +203,9 @@ export default function AdminPage() {
                     <IconButton onClick={() => viewSubmissions(assignment)}>
                       <GroupsIcon />
                     </IconButton>
-                    {/*<IconButton>
+                    <IconButton>
                       <MessageIcon />
-                    </IconButton>*/}
+                    </IconButton>
                     <IconButton onClick={() => handleEdit(assignment)}>
                       <EditIcon />
                     </IconButton>
@@ -237,7 +234,7 @@ export default function AdminPage() {
             onClose={handleChatClose}
             onSubmit={doNothing}
             assignment={selectedAssignment}
-            persona={selectedAssignment.persona}
+            personaId={selectedAssignment.persona}
           />
         )}
 
@@ -293,7 +290,7 @@ export default function AdminPage() {
             </Box>
 					</Box>
 				</Modal>
-        
+
       </Box>
 
     </ProtectedRoute >

@@ -11,19 +11,18 @@ import "jspdf-autotable";
 interface ChatProps {
   open: boolean;
   onClose: (event: any, reason: string) => void;
-  chatId? : any;
   student? : any;
-  assignment?: any;
+  assignmentId?: any;
 }
 
-export default function Chat({ open, onClose, chatId, student, assignment }: ChatProps) {
+export default function Chat({ open, onClose, student, assignmentId }: ChatProps) {
 
   /* Components */
   const [messages, setMessages] = useState<[string, boolean][]>([]);
 
   useEffect(() => {
-    getMessages(0, student.id);
-  }, [assignment]);
+    getMessages(assignmentId, student.id);
+  }, [assignmentId]);
 
   //get messages of users
   const getMessages = (ass_id: number, student_id: number) => {

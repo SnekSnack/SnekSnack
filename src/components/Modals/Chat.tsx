@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from 'react';
+import api from "@/api.js";
 import { Box, Button, TextField, Typography, IconButton, Modal } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
@@ -9,8 +10,11 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 function getMessageResponse(message:String) {
-  const reversedMessage = message.split("").reverse().join("");
-  return reversedMessage;
+
+  // !! === implement llm response ===================================================
+
+  const response = message.split("").reverse().join(""); // instead of this
+  return response;
 }
 
 interface ChatProps {
@@ -19,62 +23,63 @@ interface ChatProps {
   onSubmit: (assignment: any) => void;
   chatId? : any;
   assignment?: any; // For editing an assignment
-  persona?: any;
+  personaId?: any;
+  student?: any;
+  test?: boolean | false;
 }
 
-export default function Chat({ open, onClose, onSubmit, chatId, assignment, persona }: ChatProps) {
+export default function Chat({ open, onClose, onSubmit, chatId, assignment, personaId, student, test }: ChatProps) {
   const [chatData, setChatData] = useState({
-    id: null,
-    assignmentId: null,
-    name: '',
+    id: chatId,
+    assignment: assignment,
+    student: student,
+    chatName: '',
     question_limit: 10,
   });
   const [personaData, setPersonaData] = useState({
-    id: null,
+    id: personaId,
     name: '',
-    prompt: '',
   });
-
-  useEffect(() => {
-    if (assignment) {
-      setChatData({
-        id: chatId,
-        assignmentId: assignment.id,
-        name: assignment.name,
-        question_limit: assignment.question_limit,
-      });
-    } else {
-      setChatData({
-        id: null,
-        assignmentId: null,
-        name: 'Test Chat',
-        question_limit: 100,
-      });
-    }
-  
-    if (persona) {
-      setPersonaData({
-        id: persona.id || null,
-        name: persona.name || '',
-        prompt: persona.prompt || '',
-      });
-    } else if (assignment) {
-      // If no persona but assignment exists, set personaData.name to assignment.name
-      setPersonaData((prevState) => ({
-        ...prevState,
-        name: assignment.name || '', // Set name from assignment
-      }));
-    }
-  }, [assignment, persona]);
-
-
-  /* Components */
   const [messages, setMessages] = useState<[string, boolean][]>([]);
   const [remainingQuestions, setRemainingQuestions] = useState(chatData.question_limit);
   const [inputValue, setInputValue] = useState<string>("");
   const [disableSend, setDisableSend] = useState(false);
   const [openDownloadTranscript, setOpenDownloadTranscript] = useState(false);
   const chatEndRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (test) {
+      setChatData({
+        id: null,
+        assignment: null,
+        student: null,
+        chatName: 'Test Chat',
+        question_limit: 100,
+      });
+    }
+    else if (assignment) {
+
+      // !! === get assignment data =========================================================
+
+      setChatData({
+        id: chatId,
+        assignment: assignment,
+        student: student,
+        chatName: '', // change
+        question_limit: 10, // change
+      });
+    }
+  
+    if (personaId) {
+
+      // !! === get persona data =========================================================
+
+      setPersonaData({
+        id: personaId,
+        name: 'Interviewee'
+      });
+    }
+  }, [assignment, personaId]);
 
   const handleSendMessage = () => {
     if (inputValue.trim() !== "" && remainingQuestions > 0) {
@@ -83,6 +88,8 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
       var response = getMessageResponse(inputValue);
       
       setMessages([...messages, [inputValue, true], [response, false]]);
+
+      // !! === save message and response in DB ===================================================
 
       setInputValue(""); 
       setRemainingQuestions(remainingQuestions - 1); 
@@ -99,12 +106,9 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
     
     //create pdf of the transcript
     const doc = new jsPDF();
-
     const headers = ["Question", "Answer", "Explanation"];
-
     const data: string[][] = []
     let question = "";
-
     messages.forEach(([message, isUser]) => {
       if(isUser){
         question = message;
@@ -113,7 +117,6 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
         data.push([question, answer,""]);
       }
     });
-
     doc.autoTable({
         head: [headers],
         body: data,
@@ -123,7 +126,6 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
           cellPadding: 3,
         }
     })
-
     doc.text("Transcript of the Conversation", 15, 15);
     doc.save('transcript.pdf');
     //close modal
