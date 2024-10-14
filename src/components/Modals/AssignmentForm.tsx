@@ -174,10 +174,13 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
                 ))}
               </Select>
             </FormControl>
-
-            <Button className="button" type="submit" variant="contained" sx={{ mt: 2 }}>
-              {assignment ? 'Update' : 'Save'}
-            </Button>
+            
+            <Box className="row-space-between">
+              <Box/>
+              <Button className="button" type="submit" variant="contained" sx={{ mt: 2 }}>
+                {assignment ? 'Update' : 'Save'}
+              </Button>
+            </Box>
           </form>
         </Box>
       </Modal>

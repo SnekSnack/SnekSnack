@@ -203,7 +203,7 @@ export default function AdminPage() {
                     <IconButton onClick={() => viewSubmissions(assignment)}>
                       <GroupsIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={() => handleChat(assignment)}>
                       <MessageIcon />
                     </IconButton>
                     <IconButton onClick={() => handleEdit(assignment)}>

@@ -77,10 +77,12 @@ export default function PersonaForm({ open, onClose, onSubmit, persona }: Person
             value={formData.prompt}
             onChange={handleChange}
           />
-
-          <Button type="submit" variant="contained" className="button" sx={{ mt: 2 }}>
-            {persona ? 'Update' : 'Save'}
-          </Button>
+          <Box className="row-space-between">
+            <Box/>
+            <Button type="submit" variant="contained" className="button" sx={{ mt: 2 }}>
+              {persona ? 'Update' : 'Save'}
+            </Button>
+          </Box>
         </form>
       </Box>
     </Modal>
