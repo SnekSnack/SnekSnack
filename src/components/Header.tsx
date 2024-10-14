@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ isProtectedPage }) => {
 						console.log("Page load success")
 					} else {
 						console.log("Access Forbidden")
-						router.push("/");
+						router.push("/403");
 					}
 					console.log(data);
 				})

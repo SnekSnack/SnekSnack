@@ -96,8 +96,8 @@ export default function AdminPage() {
       .catch((err) => alert(err));
   }
 
-  const viewSubmissions = (assignmentId:any) => {
-    router.push(`/Admin/Submissions/${assignmentId}`);
+  const viewSubmissions = (assignment: any) => {
+    router.push(`/Admin/Submissions/${assignment.id}`);
   }
 
   const handleFormOpen = () => setIsFormOpen(true);
@@ -192,7 +192,7 @@ export default function AdminPage() {
                   <TableCell>{assignment.question_limit}</TableCell>
                   <TableCell>{assignment.persona}</TableCell>
                   <TableCell>
-                    <IconButton onClick={() => viewSubmissions(assignment.id)}>
+                    <IconButton onClick={() => viewSubmissions(assignment)}>
                       <GroupsIcon />
                     </IconButton>
                     {/*<IconButton>
