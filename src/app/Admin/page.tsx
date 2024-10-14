@@ -97,7 +97,7 @@ export default function AdminPage() {
   }
 
   const viewSubmissions = (assignment: any) => {
-    router.push(`/Admin/Submissions/${assignment.id}`);
+    router.push(`/Admin/${assignment.id}`);
   }
 
   const handleFormOpen = () => setIsFormOpen(true);
@@ -173,6 +173,7 @@ export default function AdminPage() {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>#</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Release Date</TableCell>
@@ -185,6 +186,7 @@ export default function AdminPage() {
             <TableBody>
               {assignments.map((assignment) => (
                 < TableRow key={assignment.id} >
+                  <TableCell>{assignment.id}</TableCell>
                   <TableCell>{assignment.name}</TableCell>
                   <TableCell>{assignment.description}</TableCell>
                   <TableCell>{assignment.release_date}</TableCell>

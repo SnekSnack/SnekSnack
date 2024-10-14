@@ -8,19 +8,21 @@ import PastChat from '@/components/Modals/PastChat'
 import Header from '@/components/Header';
 import "../../globals.css"
 import ProtectedRoute from "@/components/ProtectedRoute"
-import { useRouter } from 'next/navigation'
+//import { useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation';
 
 export default function AdminPage() {
-  const router = useRouter();
-  const { assignmentId } = router.query;
+  const params = useParams();
+  const assignmentId = params.assignmentId; // Retrieve assignmentId from URL
   const [students, setStudents] = useState<any[]>([]); 
-  //const [messages, setMessages] = useState<any[]>([]); // Open/Close modal
   const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
-  const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
-    getStudents();
-  }, []);
+    if (assignmentId) {
+      getStudents();
+    }
+  }, [assignmentId]);
 
   const getStudents = () => {
     api.get(`/api/student/list/`)
@@ -82,7 +84,6 @@ export default function AdminPage() {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                {/*<TableCell>Prompt</TableCell>*/}
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -90,7 +91,6 @@ export default function AdminPage() {
               {students.map((student) => (
                 <TableRow key={student.id}>
                   <TableCell>{student.username}</TableCell>
-                  {/*<TableCell>{student.prompt}</TableCell>*/}
                   <TableCell>
                     <IconButton onClick={() => handleChat(student)}>
                       <ChatIcon />
