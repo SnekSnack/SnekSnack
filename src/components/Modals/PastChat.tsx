@@ -68,10 +68,10 @@ export default function Chat({ open, onClose, student, assignmentId }: ChatProps
   }
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal className="modal-wrapper" open={open} onClose={onClose}>
       <Box className="modal-chat">
         <Box className="flex">
-          <Typography variant="h6">{"Chat Transcript:" + ""}</Typography>
+          <Typography sx={{padding: '30px'}} variant="h6">{"Chat Transcript:" + ""}</Typography>
           <IconButton onClick={() => handleDownloadTranscript()}>
             <FileOpenIcon />
           </IconButton>
@@ -83,7 +83,8 @@ export default function Chat({ open, onClose, student, assignmentId }: ChatProps
               overflowY: "auto", // Scroll if chat bubbles exceed the height
               mb: 2,
               width: '100%', 
-              height: '64vh'
+              height: '64vh',
+              padding: '30px',
             }}
         >
 
@@ -97,7 +98,8 @@ export default function Chat({ open, onClose, student, assignmentId }: ChatProps
             >
               <Box
                 sx={{
-                  bgcolor: (message[1]) ? "#d1c4e9" : "#dddddd",
+                  bgcolor: (message[1]) ? "#555555" : "#dddddd",
+                  color: (message[1]) ? "#ffffff" : "#000000",
                   p: 2,
                   mb: 1,
                   borderRadius: 1,

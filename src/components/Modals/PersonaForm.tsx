@@ -55,7 +55,7 @@ export default function PersonaForm({ open, onClose, onSubmit, persona }: Person
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal className="modal-wrapper" open={open} onClose={onClose}>
       <Box className="modal-form">
         <Typography variant="h6" component="h2">
           {persona ? 'Edit Persona' : 'Create New Persona'}
