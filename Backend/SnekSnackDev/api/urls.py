@@ -4,7 +4,8 @@ from api.views import *
 urlpatterns = [
     # personas
     path("bots/", BotCreate.as_view(), name = ""),
-    path("bots/delete/<int:pk>", BotDelete.as_view(), name = "delete-note"),
+    path("bots/edit/<int:pk>/", BotEdit.as_view(), name = "delete"),
+    path("bots/delete/<int:pk>/", BotDelete.as_view(), name = "delete-note"),
     # students
     path("students/", StudentAssignment.as_view(), name = "assignmnet-student"),
     path("students/Message/<int:pk>/", StudentMessage.as_view(), name = "assignmnet-student"),

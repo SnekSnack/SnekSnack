@@ -33,7 +33,14 @@ class BotCreate(generics.ListCreateAPIView):
             serializer.save()
         else:
             print(serializer.errors)
-    
+
+class BotEdit(generics.UpdateAPIView):
+    queryset = Personas.objects.all()
+    serializer_class = BotSerializer
+    # need to login
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOnly]
+
 class BotDelete(generics.DestroyAPIView):
     serializer_class = Personas
     
