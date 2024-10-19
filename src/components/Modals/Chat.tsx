@@ -134,16 +134,17 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
   }
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal className="modal-wrapper" open={open} onClose={onClose}>
       <Box className="modal-chat">
-        <Typography variant="h6">{personaData.name + ":"}</Typography>
+        <Typography sx={{padding: '30px'}} variant="h6">{personaData.name + ":"}</Typography>
         <Box
             sx={{
               flexGrow: 1,
               overflowY: "auto", // Scroll if chat bubbles exceed the height
               mb: 2,
               width: '100%', 
-              height: '64vh'
+              height: '64vh',
+              padding: '30px',
             }}
         >
 
@@ -157,7 +158,8 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
             >
               <Box
                 sx={{
-                  bgcolor: (message[1]) ? "#d1c4e9" : "#dddddd",
+                  bgcolor: (message[1]) ? "#555555" : "#dddddd",
+                  color: (message[1]) ? "#ffffff" : "#000000",
                   p: 2,
                   mb: 1,
                   borderRadius: 1,
@@ -178,8 +180,22 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
           
 
         {/* TEXTBOX */}
-        <Box sx={{ display: "flex", alignSelf: "center", justifyContent: "center", gap: 2 }}>
-          
+        <Box className="column" sx={{ 
+          position: 'absolute', // Child is absolutely positioned
+          bottom: 0, // Stick to the bottom
+          width: 'full', // Take full width of the parent
+          display: "flex", 
+          alignSelf: "center", 
+          justifyContent: "center", 
+          marginBottom: "30px",
+          }}>
+          <Box sx={{ 
+          width: 'full',
+          display: "flex", 
+          alignSelf: "center", 
+          justifyContent: "center", 
+          gap: 2
+          }}>
           <IconButton color="primary">
             <MicIcon />
           </IconButton>
@@ -189,11 +205,12 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type your message..."
             variant="outlined"
-            sx={{ flexGrow: 1, 
+            sx={{ 
+              flexGrow: 1, 
               width: {          
                 xs: 'full', 
-                sm: '420px',
-                md: '690px',
+                sm: '360px',
+                md: '620px',
               }
             }}
             onKeyDown={(e) => {
@@ -206,25 +223,27 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
           <Button
             variant="contained"
             onClick={handleSendMessage}
-            sx={{ bgcolor: "primary.main", color: "white", gap: 1 }}
+            sx={{ bgcolor: "#3c70ba", color: "white", gap: 1 }}
             disabled={(disableSend) || (remainingQuestions === 0)} // Disable the button if no questions remain
           >
             Send
             <SendIcon/>
-            </Button>
+          </Button>
+          </Box>
+          {/* Question Counter */}
+          <Typography
+            id="number-of-questions"
+            variant="body1"
+            sx={{
+              marginTop: 2,
+              color: "gray"
+            }}
+          >
+            Number of questions remaining: {remainingQuestions}
+          </Typography>
         </Box>
 
-        {/* Question Counter */}
-        <Typography
-          id="number-of-questions"
-          variant="body1"
-          sx={{
-            marginTop: 2,
-            color: "gray"
-          }}
-        >
-          Number of questions remaining: {remainingQuestions}
-        </Typography>
+        
 
 
         {openDownloadTranscript &&(

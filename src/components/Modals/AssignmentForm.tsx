@@ -100,7 +100,7 @@ export default function AssignmentForm({ open, onClose, onSubmit, assignment }: 
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Modal open={open} onClose={onClose}>
+      <Modal className="modal-wrapper" open={open} onClose={onClose}>
         <Box className="modal-form">
           <Typography variant="h6" component="h2">
             {assignment ? 'Edit Assignment' : 'Create New Assignment'}

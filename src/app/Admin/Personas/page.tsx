@@ -57,19 +57,8 @@ export default function AdminPage() {
       });
   };
 
-  const createPersona = (newAssignment: any) => {
-    const data = {
-      name: newAssignment.name,
-      prompt: newAssignment.prompt,
-    };
-    api.post(`/api/bots/`, data)
-      .then((res) => {
-        getPersonas();
-      })
-      .catch((err) => alert(err));
-  }
-
   const editPersona = (newAssignment: any) => {
+    // EL PLS FIX THIs
     api.put(`/api/bots/edit/${newAssignment.id}/`, newAssignment)
       .then((res) => {
         getPersonas();
@@ -84,6 +73,17 @@ export default function AdminPage() {
     setIsFormOpen(false);
     setSelectedPersona(null); // Reset the selected persona
   };
+  const createPersona = (newAssignment: any) => {
+    const data = {
+      name: newAssignment.name,
+      prompt: newAssignment.prompt,
+    };
+    api.post(`/api/bots/`, data)
+      .then((res) => {
+        getPersonas();
+      })
+      .catch((err) => alert(err));
+  }
 
   // Handle form submit (add or edit persona)
   const handleFormSubmit = (newPersona: any) => {
@@ -151,14 +151,15 @@ export default function AdminPage() {
               }}>
               AI Personas
             </Button>
-          </Box>
+          </Box >
           <Button className="button" variant="contained" onClick={handleFormOpen}>
             Create a New Persona
           </Button>
-        </Box>
+        </Box >
 
         {/* Table for Personas */}
-        <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+        < TableContainer component={Paper} sx={{ marginTop: 2 }
+        }>
           <Table>
             <TableHead>
               <TableRow>
@@ -189,27 +190,31 @@ export default function AdminPage() {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer >
 
         {/* Persona Form Modal */}
-        {isFormOpen && (
-          <PersonaForm
-            open={isFormOpen}
-            onClose={handleFormClose}
-            onSubmit={handleFormSubmit}
-            persona={selectedPersona} // Pass selected persona for editing
-          />
-        )}
-        {isChatOpen && (
-          <Chat
-            open={isChatOpen}
-            onClose={handleChatClose}
-            onSubmit={doNothing}
-            //assignment={null}
-            personaId={selectedPersona.id}
-            test={true}
-          />
-        )}
+        {
+          isFormOpen && (
+            <PersonaForm
+              open={isFormOpen}
+              onClose={handleFormClose}
+              onSubmit={handleFormSubmit}
+              persona={selectedPersona} // Pass selected persona for editing
+            />
+          )
+        }
+        {
+          isChatOpen && (
+            <Chat
+              open={isChatOpen}
+              onClose={handleChatClose}
+              onSubmit={doNothing}
+              //assignment={null}
+              personaId={selectedPersona.id}
+              test={true}
+            />
+          )
+        }
 
         {/* Delete confirmation */}
         <Modal
@@ -230,7 +235,7 @@ export default function AdminPage() {
             }}
           >
             <Typography sx={{ mb: 3 }}>
-              {`Are you sure you want to delete this assignment? This action is irreversible.`}
+              {`Are you sure you want to delete this AI persona? This action is irreversible.`}
             </Typography>
             <Box className="row gap-4">
               <Button
@@ -264,7 +269,7 @@ export default function AdminPage() {
           </Box>
         </Modal>
 
-      </Box>
-    </ProtectedRoute>
+      </Box >
+    </ProtectedRoute >
   );
 }
