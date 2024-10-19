@@ -8,13 +8,30 @@ from .perms import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.utils import timezone
 from rest_framework.views import APIView
+
+
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
 
     # what kind of data we accept
     serializer_class = UserSerializer
 
+class SendMessage(generics.ListCreateAPIView):
+    serializer_class = MessageSerializer
+    # need to login
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def get_queryset(self, assId):
+        user = self.request.user
+        return Personas.objects.filter(assignment__pk= assId, sent_by=user)
+
+    def perform_create(self, serializer):
+        # checks if all the data is valid
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print(serializer.errors)
 
 class BotCreate(generics.ListCreateAPIView):
     serializer_class = BotSerializer

@@ -32,7 +32,6 @@ export default function AdminPage() {
   }, []);
 
   const getPersonas = () => {
-    console.log("TEST");
     api.get("/api/bots/") // is this right?
       .then((res) => res.data)
       .then((data) => {
@@ -74,11 +73,7 @@ export default function AdminPage() {
     setSelectedPersona(null); // Reset the selected persona
   };
   const createPersona = (newAssignment: any) => {
-    const data = {
-      name: newAssignment.name,
-      prompt: newAssignment.prompt,
-    };
-    api.post(`/api/bots/`, data)
+    api.post(`/api/bots/`, newAssignment)
       .then((res) => {
         getPersonas();
       })

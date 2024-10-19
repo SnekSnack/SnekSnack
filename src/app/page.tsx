@@ -17,6 +17,15 @@ export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
   const [texts, setTexts] = useState<any[]>([]);
 
+  const sendMessage = (newAssignment: any) => {
+    api.post(`/api/student/list/`, newAssignment)
+      .then((res) => {
+        getStudent();
+      })
+      .catch((err) => alert(err));
+  }
+
+
   useEffect(() => {
     getStudent();
     getAssignments();
@@ -117,22 +126,22 @@ export default function Home() {
     const data: string[][] = []
     let question = "";
     messages.forEach(([message, isUser]) => {
-      if(isUser){
+      if (isUser) {
         question = message;
       } else {
         const answer = message;
-        data.push([question, answer,""]);
+        data.push([question, answer, ""]);
       }
     });
 
     doc.autoTable({
-        head: [headers],
-        body: data,
-        startY: 20,
-        styles: {
-          fontSize: 10,
-          cellPadding: 3,
-        }
+      head: [headers],
+      body: data,
+      startY: 20,
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+      }
     })
 
     doc.text("Transcript of the Conversation", 15, 15);

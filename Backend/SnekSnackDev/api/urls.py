@@ -17,6 +17,5 @@ urlpatterns = [
     path("messages/<int:Assignment>/<int:User>/", MessageFetch.as_view(), name = "assignmnet"),
     path("student/list/", StudentsFetch.as_view(), name = "assignmnet"),
 
-    # header
     path("header/", HeaderFetch.as_view(), name = "assignmnet"),
 ]
