@@ -17,9 +17,10 @@ export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
   const [texts, setTexts] = useState<any[]>([]);
 
-  const sendMessage = (newAssignment: any) => {
-    api.post(`/api/student/list/`, newAssignment)
+  const sendMessage = (newMessage: any) => {
+    api.post(`/api/student/list/`, newMessage)
       .then((res) => {
+        //update the messages
         getStudent();
       })
       .catch((err) => alert(err));
