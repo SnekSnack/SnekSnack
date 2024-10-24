@@ -58,8 +58,8 @@ export default function AdminPage() {
     api
       .delete(`/api/assignment/delete/${pk}/`)
       .then((res) => {
-        if (res.status === 204) alert("Assignment deleted!");
-        else alert("Failed to delete Assignment.");
+        //if (res.status === 204) alert("Assignment deleted!");
+        if (res.status !== 204) alert("Failed to delete Assignment.");
         getAssignments();
       })
       .catch((error) => alert(error));

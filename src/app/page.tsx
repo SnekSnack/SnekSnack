@@ -38,7 +38,7 @@ export default function Home() {
       getTexts(selectedAssignment.id);
 
       // check if question limit is reached
-      if (texts.length >= selectedAssignment.question_limit) {
+      if (texts.length >= 0) {
         setAssignmentCompleted(true);
       }
 

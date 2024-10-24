@@ -43,22 +43,22 @@ export default function AdminPage() {
       });
   };
 
-  const deletePersona = (id: number) => {
+  const deletePersona = (pk: number) => {
     api
-      .delete(`/api/bots/delete/${id}/`)
+      .delete(`/api/bots/delete/${pk}/`)
       .then((res) => {
-        if (res.status === 204) alert("Assignment deleted!");
-        else alert("Failed to delete Assignment.");
+        //if (res.status === 204) alert("AI Persona deleted!");
+        if (res.status !== 204) alert("Failed to delete AI Persona.");
         getPersonas();
       })
       .catch((error) => {
-        alert("FAILED TO SUBMIT");
+        alert(error);
       });
   };
 
-  const editPersona = (newAssignment: any) => {
+  const editPersona = (newPersona: any) => {
     // EL PLS FIX THIs
-    api.put(`/api/bots/edit/${newAssignment.id}/`, newAssignment)
+    api.put(`/api/bots/edit/${newPersona.id}/`, newPersona)
       .then((res) => {
         getPersonas();
       })
@@ -72,8 +72,8 @@ export default function AdminPage() {
     setIsFormOpen(false);
     setSelectedPersona(null); // Reset the selected persona
   };
-  const createPersona = (newAssignment: any) => {
-    api.post(`/api/bots/`, newAssignment)
+  const createPersona = (newPersona: any) => {
+    api.post(`/api/bots/`, newPersona)
       .then((res) => {
         getPersonas();
       })
@@ -105,6 +105,8 @@ export default function AdminPage() {
 
   const handleDelete = (persona: any) => {
     setSelectedPersona(persona);
+    console.log(persona);
+    console.log(persona.id);
     setOpenDeleteModal(true);
   };
 
@@ -177,7 +179,7 @@ export default function AdminPage() {
                     <IconButton onClick={() => handleEdit(persona)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(persona.id)}>
+                    <IconButton onClick={() => handleDelete(persona)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
