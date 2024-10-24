@@ -26,3 +26,4 @@ class Message(models.Model):
     sent_by = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=1000)
     assignment = models.ForeignKey(Assignment,on_delete=models.CASCADE)
+    byUser = models.BooleanField(null=False, blank=False, default=True)
