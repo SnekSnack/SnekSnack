@@ -59,8 +59,8 @@ class BotEdit(generics.UpdateAPIView):
     permission_classes = [StaffOnly]
 
 class BotDelete(generics.DestroyAPIView):
-    serializer_class = Personas
-    
+    serializer_class = BotSerializer
+    queryset = Personas.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOnly]
 
