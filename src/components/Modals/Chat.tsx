@@ -21,6 +21,7 @@ interface ChatProps {
   open: boolean;
   onClose: (event: any, reason: string) => void;
   onSubmit: (assignment: any) => void;
+  onSend?: (message: string, sentBy: boolean) => void;
   chatId? : any;
   assignment?: any; // For editing an assignment
   personaId?: any;
@@ -28,7 +29,7 @@ interface ChatProps {
   test?: boolean | false;
 }
 
-export default function Chat({ open, onClose, onSubmit, chatId, assignment, personaId, student, test }: ChatProps) {
+export default function Chat({ open, onClose, onSubmit, onSend, chatId, assignment, personaId, student, test }: ChatProps) {
   const [chatData, setChatData] = useState({
     id: chatId,
     assignment: assignment,
@@ -85,11 +86,17 @@ export default function Chat({ open, onClose, onSubmit, chatId, assignment, pers
     if (inputValue.trim() !== "" && remainingQuestions > 0) {
       setDisableSend(true); // stop user from sending anything
 
+      if (!test && onSend) {
+        onSend(inputValue, true);
+      }
+
       var response = getMessageResponse(inputValue);
       
       setMessages([...messages, [inputValue, true], [response, false]]);
 
-      // !! === save message and response in DB ===================================================
+      if (!test && onSend) {
+        onSend(response, false);
+      }
 
       setInputValue(""); 
       setRemainingQuestions(remainingQuestions - 1); 

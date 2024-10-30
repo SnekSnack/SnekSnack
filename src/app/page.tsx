@@ -17,15 +17,15 @@ export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
   const [texts, setTexts] = useState<any[]>([]);
 
-  const sendMessage = (newMessage: any) => {
-    api.post(`/api/student/list/`, newMessage)
+  const sendMessage = (message: string, sentByUser: boolean) => {
+    let assignmentId = selectedAssignment.id;
+    api.post(`/api/student/list/`, {message, assignmentId, sentByUser})
       .then((res) => {
         //update the messages
         getStudent();
       })
       .catch((err) => alert(err));
   }
-
 
   useEffect(() => {
     getStudent();
@@ -38,7 +38,7 @@ export default function Home() {
       // get the texts for relevant assignment
       getTexts(selectedAssignment.id);
 
-      // check if question limit is reached
+      // check assignment has been opened
       if (texts.length >= 0) {
         setAssignmentCompleted(true);
       }
@@ -55,9 +55,6 @@ export default function Home() {
     }
   };
   const handleChatSubmit = () => {
-
-    // !! === set student to have done assignment on db ===================================================
-
     setAssignmentCompleted(true);
   }
   const handleChat = (assignment: any) => {
@@ -163,6 +160,7 @@ export default function Home() {
           open={isChatOpen}
           onClose={handleChatClose}
           onSubmit={handleChatSubmit}
+          onSend={sendMessage}
           assignment={selectedAssignment}
         />
       )}
