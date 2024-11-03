@@ -86,17 +86,17 @@ export default function Chat({ open, onClose, onSubmit, onSend, chatId, assignme
     if (inputValue.trim() !== "" && remainingQuestions > 0) {
       setDisableSend(true); // stop user from sending anything
 
-      if (!test && onSend) {
+      /*if (!test && onSend) {
         onSend(inputValue, true);
-      }
+      }*/
 
       var response = getMessageResponse(inputValue);
       
       setMessages([...messages, [inputValue, true], [response, false]]);
 
-      if (!test && onSend) {
+      /*if (!test && onSend) {
         onSend(response, false);
-      }
+      }*/
 
       setInputValue(""); 
       setRemainingQuestions(remainingQuestions - 1); 
@@ -203,7 +203,7 @@ export default function Chat({ open, onClose, onSubmit, onSend, chatId, assignme
           justifyContent: "center", 
           gap: 2
           }}>
-          <IconButton color="primary">
+          <IconButton color="primary" disabled>
             <MicIcon />
           </IconButton>
           

@@ -1,7 +1,7 @@
 "use client"
-import api from "@/api";
+//import api from "@/api";
 import { useRouter } from 'next/navigation'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
+//import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import Image from 'next/image';
 
 
@@ -20,8 +20,19 @@ export default function Login() {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		if (username=="student" && password=="test") {
+			setOpenConsentModal(true);
+			setErrorMsg("");
+		} else if (username=="admin" && password=="test") {
+			router.push("/Admin")
+			setErrorMsg("");
+		} else {
+			setErrorMsg("Incorrect username or password");
+		}
+
 		//console.log("HELLO");
-		try {
+		/*try {
 			const res = await api.post("/api/token/", { username, password });
 			localStorage.setItem(ACCESS_TOKEN, res.data.access);
 			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
@@ -49,7 +60,7 @@ export default function Login() {
 				setErrorMsg("An unexpected error occurred. Please try again later.");
 			}
 			console.log(error);
-		}
+		}*/
 	};
 
 	const handleAgree = () => {

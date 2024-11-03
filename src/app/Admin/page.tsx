@@ -143,7 +143,8 @@ export default function AdminPage() {
   }
 
   return (
-    <ProtectedRoute>
+    <>
+    {/*<ProtectedRoute>*/}
       <Header isProtectedPage={true} />
       <Box className="content-wrapper">
         <Box className="row-space-between">
@@ -293,6 +294,7 @@ export default function AdminPage() {
 
       </Box>
 
-    </ProtectedRoute >
+    {/*</ProtectedRoute >*/}
+    </>
   );
 }

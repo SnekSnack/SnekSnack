@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material'
 import "@/app/globals.css"
-import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
+//import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useRouter } from 'next/navigation'
-import api from "@/api.js";
+//import api from "@/api.js";
 import Image from 'next/image';
 interface HeaderProps {
   isProtectedPage: boolean;
@@ -13,14 +13,15 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isProtectedPage }) => {
   const router = useRouter();
-  const [username, setUsername] = useState<any[]>([]);
+  //const [username, setUsername] = useState<any[]>([]);
 
   const handleLogOut = () => {
-    localStorage.removeItem(REFRESH_TOKEN);
-    localStorage.removeItem(ACCESS_TOKEN);
+    //localStorage.removeItem(REFRESH_TOKEN);
+    //localStorage.removeItem(ACCESS_TOKEN);
     router.push("Login/");
   };
 
+  /*
   useEffect(() => {
     if (isProtectedPage) {
       api.get("/api/header/")
@@ -53,11 +54,11 @@ const Header: React.FC<HeaderProps> = ({ isProtectedPage }) => {
         console.error(err);
       });
 
-  };
+  };*/
 
   return (
     <header className="header">
-      <Box>Hi, {username}</Box>
+      <Box>Hi, testUser</Box>
       <Box className="flex gap-5">
         <Image
           src='/deakinsmall.png'

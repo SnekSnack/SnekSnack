@@ -47,7 +47,8 @@ export default function AdminPage() {
   };
 
   return (
-    <ProtectedRoute>
+    <>
+    {/*<ProtectedRoute>*/}
       <Header isProtectedPage={true} />
       <Box className="content-wrapper">
         
@@ -112,6 +113,7 @@ export default function AdminPage() {
           />
         )}
       </Box>
-    </ProtectedRoute>
+    {/*</ProtectedRoute>*/}
+    </>
   );
 }
