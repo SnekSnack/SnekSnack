@@ -1,7 +1,7 @@
 "use client"
 
 import ProtectedRoute from "@/components/ProtectedRoute";
-import api from "@/api.js";
+//import api from "@/api.js";
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -41,7 +41,17 @@ export default function AdminPage() {
   }, []);
 
   const getAssignments = () => {
-    api.get("/api/assignment/")
+
+    var data = [
+      {id:1,name:'Test A1',description:'assignments are sorted by release date',release_date:'2024-10-01',due_date:'2024-10-07',question_limit:10,persona:1},
+      {id:2,name:'Test A2',description:'feel free to check out the functionalities!',release_date:'2024-10-27',due_date:'2024-11-05',question_limit:10,persona:2},
+      {id:3,name:'Test A3',description:'this is just static test data, it will reset to these 3 rows on page refresh',release_date:'2024-11-21',due_date:'2024-11-29',question_limit:10,persona:1}
+    ];
+
+    const sortedData = data.sort((a: any, b: any) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+    setAssignments(sortedData)
+
+    /*api.get("/api/assignment/")
       .then((res) => res.data)
       .then((data) => {
         const sortedData = data.sort((a: any, b: any) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
@@ -49,23 +59,22 @@ export default function AdminPage() {
       })
       .catch((err) => {
         console.error(err);
-      });
-
-
+      });*/
   };
 
   const deleteAssignment = (pk: number) => {
-    api
+    setAssignments((prev) => prev.filter((assignment) => assignment.id !== pk));
+    /*api
       .delete(`/api/assignment/delete/${pk}/`)
       .then((res) => {
         //if (res.status === 204) alert("Assignment deleted!");
         if (res.status !== 204) alert("Failed to delete Assignment.");
         getAssignments();
       })
-      .catch((error) => alert(error));
+      .catch((error) => alert(error));*/
   };
 
-  const createAssignment = (newAssignment: any) => {
+  /*const createAssignment = (newAssignment: any) => {
     const data = {
       name: newAssignment.name,
       description: newAssignment.description,
@@ -98,7 +107,7 @@ export default function AdminPage() {
         getAssignments();
       })
       .catch((err) => alert(err));
-  }
+  }*/
 
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
@@ -108,11 +117,20 @@ export default function AdminPage() {
 
   const handleFormSubmit = (newAssignment: any) => {
     if (newAssignment.id == null) {
+      // Add new persona
+      setAssignments((prev) => [...prev, { ...newAssignment, id: prev.length + 1 }]);
+    } else {
+      // Update existing persona
+      setAssignments((prev) =>
+        prev.map((assignment) => (assignment.id === assignment.id ? newAssignment : assignment))
+      );
+    }
+    /*if (newAssignment.id == null) {
       createAssignment(newAssignment);
     }
     else {
       editAssignment(newAssignment);
-    }
+    }*/
     handleFormClose();
   };
 

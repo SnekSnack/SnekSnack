@@ -32,7 +32,17 @@ export default function AdminPage() {
   }, []);
 
   const getPersonas = () => {
-    api.get("/api/bots/") // is this right?
+
+    var data = [
+      {id:1,name:'Alice',prompt:'personas are sorted by date created (id order)'},
+      {id:2,name:'Bob',prompt:'prompt is a longtext field!'},
+      {id:3,name:'Eve',prompt:'here are all the AI patients'},
+    ];
+
+    const sortedData = data.sort((a: any, b: any) => b.id - a.id);
+    setPersonas(sortedData);
+
+    /*api.get("/api/bots/") // is this right?
       .then((res) => res.data)
       .then((data) => {
         const sortedData = data.sort((a: any, b: any) => b.id - a.id);
@@ -40,11 +50,12 @@ export default function AdminPage() {
       })
       .catch((err) => {
         console.error(err);
-      });
+      });*/
   };
 
   const deletePersona = (pk: number) => {
-    api
+    setPersonas((prev) => prev.filter((persona) => persona.id !== pk));
+    /*api
       .delete(`/api/bots/delete/${pk}/`)
       .then((res) => {
         //if (res.status === 204) alert("AI Persona deleted!");
@@ -53,7 +64,7 @@ export default function AdminPage() {
       })
       .catch((error) => {
         alert(error);
-      });
+      });*/
   };
 
   const editPersona = (newPersona: any) => {
@@ -82,12 +93,21 @@ export default function AdminPage() {
 
   // Handle form submit (add or edit persona)
   const handleFormSubmit = (newPersona: any) => {
-    if (newPersona.id == null) {
+    if (selectedPersona) {
+      // Update existing persona
+      setPersonas((prev) =>
+        prev.map((persona) => (persona.id === newPersona.id ? newPersona : persona))
+      );
+    } else {
+      // Add new persona
+      setPersonas((prev) => [...prev, { ...newPersona, id: prev.length + 1 }]);
+    }
+    /*if (newPersona.id == null) {
       createPersona(newPersona);
     }
     else {
       editPersona(newPersona);
-    }
+    }*/
     handleFormClose();
   };
 
