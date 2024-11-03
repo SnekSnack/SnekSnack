@@ -14,18 +14,24 @@ export default function Home() {
   const [student, setStudent] = useState<any | null>(null);
   const [assignmentCompleted, setAssignmentCompleted] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<any | null>(null);
+  const [assignmentRef, setAssignmentRef] = useState<any>(null);
   const [isChatOpen, setIsChatOpen] = useState(false); // Open/Close modal
   const [texts, setTexts] = useState<any[]>([]);
 
-  const sendMessage = (message: string, sentByUser: boolean) => {
-    let assignmentId = selectedAssignment.id;
-    api.post(`/api/student/list/`, {message, assignmentId, sentByUser})
+  const sendMessage = (content: string, byUser: boolean) => {
+    let assignment = assignmentRef[0].id;
+    api.post(`/api/students/Message/`, { content, assignment, byUser })
       .then((res) => {
-        //update the messages
+        // Update the messages
         getStudent();
       })
-      .catch((err) => alert(err));
-  }
+      .catch((err) => {
+        console.log({ content, assignment, byUser });
+        alert(err.response ? err.response.data : "An error occurred"); // Show detailed error if available
+      });
+  };
+
+
 
   useEffect(() => {
     getStudent();
@@ -35,6 +41,7 @@ export default function Home() {
       setAssignmentCompleted(false);
     }
     else {
+      console.log(selectedAssignment)
       // get the texts for relevant assignment
       getTexts(selectedAssignment.id);
 
@@ -76,17 +83,17 @@ export default function Home() {
   };
 
   const getAssignments = () => {
-
     api.get("/api/students/")
       .then((res) => res.data)
       .then((data) => {
-        setSelectedAssignment(data);
+        console.log("Assingment");
         console.log(data);
+        setSelectedAssignment(data);
+        setAssignmentRef(data);
       })
       .catch((err) => {
-        console.error(err);
+        console.error(err.content);
       });
-
   };
 
   const getTexts = (id: number) => {

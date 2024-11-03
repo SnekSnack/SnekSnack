@@ -8,7 +8,9 @@ urlpatterns = [
     path("bots/delete/<int:pk>/", BotDelete.as_view(), name = "delete-note"),
     # students
     path("students/", StudentAssignment.as_view(), name = "assignmnet-student"),
+    
     path("students/Message/<int:pk>/", StudentMessage.as_view(), name = "assignmnet-student"),
+    path("students/Message/", StudentMessage.as_view(), name = "assignmnet-student"),
     # admin
     path("assignment/", AssignmentCreate.as_view(), name = "assignmnet"),
     path("assignment/delete/<int:pk>/", AssignmentDelete.as_view(), name = "assignmnet"),

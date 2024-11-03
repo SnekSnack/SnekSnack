@@ -19,9 +19,6 @@ class Assignment(models.Model):
     question_limit = models.IntegerField(null=True)
     persona = models.ForeignKey(Personas, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.title
-    
 class Message(models.Model):
     sent_by = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=1000)

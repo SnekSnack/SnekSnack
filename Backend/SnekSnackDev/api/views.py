@@ -136,20 +136,16 @@ class HeaderFetch(generics.RetrieveUpdateAPIView):
 class StudentAssignment(generics.ListAPIView):
     serializer_class = AssignmentSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         current_date = timezone.now().date()
         current_ass = Assignment.objects.filter(release_date__lte=current_date,due_date__gte=current_date)
+        return current_ass
 
-        if(not current_ass.exists()):
-            return None
-        else:
-            return current_ass.first()
-
-class StudentMessage(generics.ListAPIView):
+class StudentMessage(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
-    authentication_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get_queryset(self, id):
         user = self.request.user
         ass = Assignment.objects.get(id)
@@ -157,18 +153,24 @@ class StudentMessage(generics.ListAPIView):
     
     def perform_create(self,serializer):
         
+        print(serializer)
         # check if input is valid
         if serializer.is_valid():
 
             # get user in backend so they cant use other people
             user = self.request.user
-            messages_sent = Message.objects.filter(sent_by = user, assignment= serializer.assignment).count()
-            assignment = Assignment.objects.filter(pk=serializer.assignment)
+            data = serializer.validated_data
+            print(data)
+            messages_sent = Message.objects.filter(sent_by = user, assignment= data["assignment"]).count()
 
             # check if assignment exists and if question limit hasnt passed
-            if(assignment.exists() and messages_sent<assignment.first().question_limit):
+            if(messages_sent<data["assignment"].question_limit):
                 # save the message
-                serializer.sent_by = user
-                serializer.save()
+                Message(
+                    sent_by = user,
+                    content = data["content"],
+                    assignment = data["assignment"],
+                    byUser = data["byUser"],
+                        ).save()
 
                 # THIS IS WHERE THE LLM CODE SHOULD GO
