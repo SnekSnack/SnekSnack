@@ -25,7 +25,12 @@ export default function AdminPage() {
   }, [assignmentId]);
 
   const getStudents = () => {
-    api.get(`/api/student/list/`)
+    var data = [
+      {id:1,username:'Jack'},
+      {id:2,username:'Jill'}
+    ]
+    setStudents(data);
+    /*api.get(`/api/student/list/`)
       .then((res) => res.data)
       .then((data) => {
         setStudents(data);
@@ -33,7 +38,7 @@ export default function AdminPage() {
       })
       .catch((err) => {
         console.error(err);
-      });
+      });*/
   }
 
   const handleChat = (student: any) => {
@@ -47,7 +52,8 @@ export default function AdminPage() {
   };
 
   return (
-    <ProtectedRoute>
+    <>
+    {/*<ProtectedRoute>*/}
       <Header isProtectedPage={true} />
       <Box className="content-wrapper">
         
@@ -112,6 +118,7 @@ export default function AdminPage() {
           />
         )}
       </Box>
-    </ProtectedRoute>
+    {/*</ProtectedRoute>*/}
+    </>
   );
 }

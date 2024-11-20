@@ -154,7 +154,8 @@ export default function Home() {
   }
 
   return (
-    <ProtectedRoute>
+    <>
+    {/*<ProtectedRoute>*/}
       <Header isProtectedPage={false} />
 
       <Box className="content-wrapper">
@@ -171,7 +172,7 @@ export default function Home() {
           assignment={selectedAssignment}
         />
       )}
-
-    </ProtectedRoute>
+    {/*</ProtectedRoute>*/}
+    </>
   );
 }
